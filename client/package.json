@@ -1,0 +1,28 @@
+{
+  "name": "wearo-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "build-css": "node-sass --output-style compressed  src/styles/ -o src/dist/",
+    "watch-css": "node-sass -w --output-style compressed  src/styles/ -o src/dist/",
+    "dev": "npm run build-css && npm run build-css -- -watch -recursive & npm start"
+  },
+  "dependencies": {
+    "node-sass": "^7.0.1",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.1",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.7"
+  }
+}

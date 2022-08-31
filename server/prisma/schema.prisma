@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Guest {
+    id String @id @default(uuid())
+    cookie_value String
+    create_at DateTime @default(now())
+    Guest_Cart Guest_Cart[]
+}
+
+model Coupons {
+    id String @id @default(uuid())
+    value String
+    status String
+    discount Int
+}
+
+model Home_Screen_Banner {
+    id Int @id @default(autoincrement())
+    text String
+    coupon_code String
+}
+
+model Home_Screen_Promo {
+    id Int @id @default(autoincrement())
+    text String
+    product_id String
+    name String
+    price Float
+    image String
+    Product Product @relation(fields: [product_id], references: [id])
+}
+
+model Guest_Cart {
+    id Int @id @default(autoincrement())
+    owner_id String
+    product_id String
+    product_image String
+    product_name String
+    product_price Float
+    selected_size String
+    quanitity Int
+    Guest Guest @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id String @id @default(uuid())
+  email String
+  password String
+  first_name String
+  last_name String
+  phone String
+  address1 String?
+  address2 String?
+  city String?
+  state String?
+  zip String?
+  create_at DateTime @default(now())
+  orders Orders[]
+  cart Cart[]
+  Faviorites Favorites[]
+  Payment Payment[]
+}
+
+model Payment {
+    id Int @id @default(autoincrement())
+    user_id String
+    card_first_name String
+    card_last_name String
+    card_number String
+    card_exp_date String
+    billing_address1 String
+    billing_address2 String?
+    city String
+    state String
+    zip String
+    User User @relation(fields: [user_id], references: [id])
+}
+
+model Favorites {
+    id Int @id @default(autoincrement())
+    user_id String
+    User User @relation(fields: [user_id], references: [id])
+    product_id String
+    Product Product @relation(fields: [product_id], references: [id])
+}
+
+model Cart {
+    id Int @id @default(autoincrement())
+    owner_id String
+    product_id String
+    product_image String
+    product_name String
+    product_price Float
+    selected_size String
+    quanitity Int
+    User User @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+}
+
+model Product {
+    id String @id @default(uuid())
+    name String
+    img1 String
+    img2 String?
+    img3 String?
+    img4 String?
+    color String
+    material String?
+    description String?
+    price Float
+    category String
+    brand String
+    type String
+    gender String
+    checkout_count Int @default(0)
+    OrderDetails Order_Details[]
+    Faviorites Favorites[]
+    Home_Screen_Promo Home_Screen_Promo[]
+    Product_Size Product_Size[]
+}
+
+model Product_Size {
+    id Int @id @default(autoincrement())
+    product_id String
+    size String
+    stock Int
+    Product Product @relation(fields: [product_id], references: [id])
+}
+
+model Orders {
+    id String @id @default(uuid())
+    user_id String
+    User User @relation(fields: [user_id], references: [id])
+    email String
+    card_holder_first_name String
+    card_holder_last_name String
+    phone String
+    card_number String
+    shipping_first_name String
+    shipping_last_name String
+    shipping_address1 String
+    shipping_address2 String?
+    shipping_city String
+    shipping_zip String
+    shipping_state String
+    billing_first_name String
+    billing_last_name String
+    billing_address1 String
+    billing_address2 String?
+    billing_city String
+    billing_state String
+    billing_zip String
+    order_date DateTime @default(now())
+    tracking_number String?
+    order_status String?
+    total_pirce Int
+    order_details Order_Details[]
+}
+
+model Order_Details {
+    id Int @id @default(autoincrement())
+    order_id String
+    Order Orders @relation(fields: [order_id], references: [id])
+    product_id String
+    selected_size String
+    quantity Int
+    Product Product @relation(fields: [product_id], references: [id])
+}
