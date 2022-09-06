@@ -33,7 +33,7 @@
     }
 
     .title::after {
-      content: "";
+      content: '';
       border-bottom: 3px solid $white;
       width: 26px;
       display: block;
@@ -50,7 +50,7 @@
         overflow: hidden;
 
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           width: 0%;
           height: 3px;
@@ -82,19 +82,32 @@
     }
 
     .newsletter {
-      width: 70%;
+      &-button {
+        position: relative;
+        max-width: 400px;
+      }
 
       button {
-        padding: $padding3;
-        border: 1px solid $white;
+        padding: 0;
+        border: 0;
         border-radius: 0px;
+        background: transparent;
+        position: absolute;
+        right: 10px;
+        color: $white;
+        font-size: 20px;
+        top: 50%;
+        transform: translateY(-50%);
       }
 
       input {
         padding: $padding3;
-        width: 60%;
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
         background-color: transparent;
         border: 1px solid $white;
+        color: $white;
       }
     }
   }

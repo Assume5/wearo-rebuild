@@ -1,0 +1,105 @@
+.product {
+  .products-container {
+    display: flex;
+    gap: 20px;
+
+    @include breakpoint-max(lg) {
+      gap: 0 15px;
+    }
+
+    @include breakpoint-max(sm) {
+      gap: 0 10px;
+      justify-content: space-between;
+    }
+
+    .product {
+      width: calc(25% - 20px);
+
+      @include breakpoint-max(lg) {
+        width: calc(33.33% - 15px);
+      }
+
+      @include breakpoint-max(sm) {
+        width: calc(50% - 10px);
+      }
+
+      .product-img {
+        display: block;
+        height: 30vw;
+        position: relative;
+
+        @include breakpoint-max(lg) {
+          height: 50vw;
+        }
+
+        @include breakpoint-max(sm) {
+          height: 80vw;
+        }
+
+        &:hover {
+          .font-img {
+            transform: scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+          }
+
+          .back-img {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+
+        &:not(:hover) {
+          .back-img {
+            transform: scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+          }
+        }
+
+        .font-img,
+        .back-img {
+          transition: all 0.3s linear;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .back-img {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        svg {
+          z-index: 100;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          font-size: 20px;
+          padding: 15px;
+        }
+      }
+
+      .product-text {
+        h5 {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          text-transform: capitalize;
+        }
+
+        h5,
+        p {
+          margin: 10px 0;
+        }
+
+        .color-box {
+          height: 20px;
+          width: 20px;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

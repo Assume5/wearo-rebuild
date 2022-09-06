@@ -7,37 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Guest {
+model guest {
     id String @id @default(uuid())
     cookie_value String
     create_at DateTime @default(now())
-    Guest_Cart Guest_Cart[]
+    guest_cart guest_cart[]
 }
 
-model Coupons {
+model coupons {
     id String @id @default(uuid())
     value String
     status String
     discount Int
 }
 
-model Home_Screen_Banner {
+model page_screen_hero {
+    id Int @id @default(autoincrement())
+    category_id Int
+    background_image String
+    text String?
+    category category @relation(fields: [category_id], references: [id])
+}
+
+model home_screen_banner {
     id Int @id @default(autoincrement())
     text String
     coupon_code String
 }
 
-model Home_Screen_Promo {
+model home_screen_promo {
     id Int @id @default(autoincrement())
     text String
     product_id String
     name String
     price Float
     image String
-    Product Product @relation(fields: [product_id], references: [id])
 }
 
-model Guest_Cart {
+model guest_cart {
     id Int @id @default(autoincrement())
     owner_id String
     product_id String
@@ -46,10 +53,10 @@ model Guest_Cart {
     product_price Float
     selected_size String
     quanitity Int
-    Guest Guest @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+    guest guest @relation(fields: [owner_id], references: [id], onDelete: Cascade)
 }
 
-model User {
+model user {
   id String @id @default(uuid())
   email String
   password String
@@ -62,13 +69,13 @@ model User {
   state String?
   zip String?
   create_at DateTime @default(now())
-  orders Orders[]
-  cart Cart[]
-  Faviorites Favorites[]
-  Payment Payment[]
+  orders orders[]
+  cart cart[]
+  favorites favorites[]
+  payment payment[]
 }
 
-model Payment {
+model payment {
     id Int @id @default(autoincrement())
     user_id String
     card_first_name String
@@ -80,18 +87,18 @@ model Payment {
     city String
     state String
     zip String
-    User User @relation(fields: [user_id], references: [id])
+    user user @relation(fields: [user_id], references: [id])
 }
 
-model Favorites {
+model favorites {
     id Int @id @default(autoincrement())
     user_id String
-    User User @relation(fields: [user_id], references: [id])
+    user user @relation(fields: [user_id], references: [id])
     product_id String
-    Product Product @relation(fields: [product_id], references: [id])
+    product product @relation(fields: [product_id], references: [id])
 }
 
-model Cart {
+model cart {
     id Int @id @default(autoincrement())
     owner_id String
     product_id String
@@ -100,10 +107,24 @@ model Cart {
     product_price Float
     selected_size String
     quanitity Int
-    User User @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+    user user @relation(fields: [owner_id], references: [id], onDelete: Cascade)
 }
 
-model Product {
+model parent_nav {
+    id Int @id @default(autoincrement())
+    text String @unique //on the nav new men women etc..
+    category category[]
+}
+model category {
+    id Int @id @default(autoincrement())
+    category String //footwear etc..
+    parent_nav_id Int
+    products product[]
+    page_screen page_screen_hero[]
+    product_nav parent_nav @relation(fields: [parent_nav_id], references: [id], onDelete: Cascade)
+}
+
+model product {
     id String @id @default(uuid())
     name String
     img1 String
@@ -111,32 +132,34 @@ model Product {
     img3 String?
     img4 String?
     color String
+    color_hex String?
+    related_product_id String?
     material String?
     description String?
     price Float
-    category String
+    category_id Int
     brand String
     type String
     gender String
     checkout_count Int @default(0)
-    OrderDetails Order_Details[]
-    Faviorites Favorites[]
-    Home_Screen_Promo Home_Screen_Promo[]
-    Product_Size Product_Size[]
+    order_details order_details[]
+    favorites favorites[]
+    product_size product_size[]
+    category category @relation(fields: [category_id], references: [id])
 }
 
-model Product_Size {
+model product_size {
     id Int @id @default(autoincrement())
     product_id String
     size String
     stock Int
-    Product Product @relation(fields: [product_id], references: [id])
+    product product @relation(fields: [product_id], references: [id])
 }
 
-model Orders {
+model orders {
     id String @id @default(uuid())
     user_id String
-    User User @relation(fields: [user_id], references: [id])
+    user user @relation(fields: [user_id], references: [id])
     email String
     card_holder_first_name String
     card_holder_last_name String
@@ -160,15 +183,15 @@ model Orders {
     tracking_number String?
     order_status String?
     total_pirce Int
-    order_details Order_Details[]
+    order_details order_details[]
 }
 
-model Order_Details {
+model order_details {
     id Int @id @default(autoincrement())
     order_id String
-    Order Orders @relation(fields: [order_id], references: [id])
+    order orders @relation(fields: [order_id], references: [id])
     product_id String
     selected_size String
     quantity Int
-    Product Product @relation(fields: [product_id], references: [id])
+    product product @relation(fields: [product_id], references: [id])
 }

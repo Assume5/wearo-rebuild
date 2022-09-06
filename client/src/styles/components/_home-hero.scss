@@ -1,0 +1,273 @@
+.promo-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  gap: $padding4 0;
+
+  @include breakpoint-max(lg) {
+    height: 100vh;
+  }
+
+  @include breakpoint-max(md) {
+    flex-direction: column-reverse;
+    overflow: hidden;
+  }
+
+  @include breakpoint-max(sm) {
+    height: auto;
+    margin: $padding5 0;
+  }
+
+  .promo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $padding4;
+
+    @include breakpoint-max(lg) {
+      margin: $padding4 0px;
+    }
+
+    @include breakpoint-max(md) {
+      flex-direction: column-reverse;
+      margin: $padding4 0px;
+    }
+
+    .image-container {
+      width: 80%;
+      overflow: hidden;
+      height: auto;
+      border-radius: 25px;
+
+      @include breakpoint-max(md) {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+      }
+
+      .carousel-item {
+        display: none;
+        position: relative;
+        cursor: pointer;
+
+        &.active {
+          display: block;
+          animation: fadeInLeftPromoHero 0.2s linear;
+        }
+
+        .overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-color: $mineShaft;
+          opacity: 0.3;
+        }
+
+        .overlay-text {
+          color: $white;
+          position: absolute;
+          left: 50px;
+          bottom: 50px;
+          z-index: 1;
+
+          p {
+            font-style: italic;
+            font-weight: bold;
+          }
+
+          @include breakpoint-max(lg) {
+            left: 30px;
+            bottom: 30px;
+          }
+
+          @include breakpoint-max(sm) {
+            left: 10px;
+            bottom: 10px;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        min-height: 700px;
+        max-height: 700px;
+        object-fit: cover;
+      }
+    }
+
+    .slider-lists {
+      width: 20%;
+
+      @include breakpoint-max(md) {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        position: relative;
+        padding: 0px $padding3;
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
+
+        &::-webkit-scrollbar {
+          width: 0; /* Remove scrollbar space */
+          background: transparent; /* Optional: just make scrollbar invisible */
+          height: 0;
+        }
+      }
+
+      .slider-list {
+        height: 12.5vh;
+        margin: $padding3 0px;
+        padding: $padding2 $padding3;
+        border-radius: 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        transition: background-color 0.3s ease-out;
+        overflow: hidden;
+        position: relative;
+
+        @include breakpoint-max(xl) {
+          height: 10vw;
+          padding: $padding1 $padding2;
+        }
+
+        @include breakpoint-max(lg) {
+          height: 50px;
+        }
+
+        @include breakpoint-max(md) {
+          height: 8vh;
+          flex: 1 0 auto;
+          width: 45%;
+        }
+
+        &:hover {
+          background-color: $gray;
+        }
+
+        &.active {
+          background-color: $gray;
+
+          .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: $white;
+            opacity: 0.1;
+            width: 100%;
+            height: 100%;
+            transition: width 5s cubic-bezier(0, 0, 0, 0);
+
+            @include breakpoint-max(md) {
+              display: none;
+            }
+          }
+
+          img {
+            animation: pulse 0.5s linear;
+          }
+        }
+
+        .overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          background-color: $white;
+          opacity: 0.1;
+          width: 0%;
+          height: 100%;
+        }
+
+        p {
+          padding: 0px $padding2;
+          color: $white;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        img {
+          width: 50%;
+          height: auto;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .current-location {
+    background-color: $gray;
+    padding: $padding3 $padding4;
+    color: $white;
+    display: inline-block;
+    border-radius: 100px;
+    transition: background-color 0.5s ease-in-out;
+    cursor: pointer;
+
+    @include breakpoint-max(sm) {
+      padding: $padding3;
+      width: 100%;
+      text-align: center;
+    }
+
+    &:hover {
+      background-color: $white;
+      color: $black;
+    }
+
+    svg {
+      margin-right: $padding3;
+    }
+  }
+
+  .promo-hero-modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background-color: $mineShaftBackground;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out;
+    color: $white;
+
+    &.modal-up {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 50px;
+      right: 50px;
+
+      svg {
+        font-size: 40px;
+        cursor: pointer;
+        color: $white;
+      }
+    }
+  }
+}
