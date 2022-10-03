@@ -1,0 +1,95 @@
+.product-filter {
+  display: flex;
+  gap: 0 20px;
+  margin-bottom: 50px;
+
+  h4 {
+    margin: 0;
+  }
+
+  .filter-container {
+    &.active {
+      svg {
+        transform: rotate(90deg);
+      }
+
+      .filter-items {
+        transition: all 0.2s linear;
+        max-height: 100%;
+        padding: 10px 5px;
+      }
+    }
+
+    .filter-header {
+      display: flex;
+      align-items: center;
+      gap: 0 10px;
+      text-transform: capitalize;
+      cursor: pointer;
+
+      svg {
+        transition: transform 0.2s linear;
+      }
+    }
+
+    .filter-items {
+      max-height: 0;
+      width: 300px;
+      overflow: hidden;
+      position: absolute;
+      background-color: $white;
+      margin-top: 10px;
+      border-radius: 4px;
+      z-index: 100;
+
+      .filter-item {
+        margin: 5px 0;
+        padding: 5px 0;
+
+        label {
+          color: $black;
+          padding: 0 15px;
+          text-transform: capitalize;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          position: relative;
+
+          .checkmark {
+            width: 20px;
+            height: 20px;
+            margin-right: 20px;
+            border: 1px solid $black;
+            position: relative;
+          }
+
+          &.active {
+            .checkmark {
+              &::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                width: 5px;
+                height: 10px;
+                border: solid $gray;
+                border-width: 0 3px 3px 0;
+                transform: translate(-50%, -50%) rotate(45deg);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.color {
+      p {
+        span {
+          width: 20px;
+          height: 20px;
+          display: block;
+        }
+      }
+    }
+  }
+}

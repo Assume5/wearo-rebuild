@@ -142,6 +142,7 @@ model product {
     type String
     gender String
     checkout_count Int @default(0)
+    create_at DateTime @default(now())
     order_details order_details[]
     favorites favorites[]
     product_size product_size[]

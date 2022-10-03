@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FullHeightHero } from '../../components/Hero/FullHeightHero';
 import { Page } from '../../components/Page/Page';
+import { SkeletonLoading } from '../../components/Skeleton/SkeletonLoading';
 import { IOverview } from '../../types/page-option';
-import { serverUrl } from '../../utils/constants';
+import { serverUrl, timeout } from '../../utils/constants';
 import { trimSpace } from '../../utils/function';
 
 export const ProductsOverview = () => {
@@ -11,6 +12,7 @@ export const ProductsOverview = () => {
   const [data, setData] = useState<IOverview[]>();
 
   useEffect(() => {
+    setData(undefined);
     const fetchOverview = async () => {
       const res = await fetch(`${serverUrl}/page-option/overview/${department}`, {
         method: 'GET',
@@ -24,13 +26,23 @@ export const ProductsOverview = () => {
         console.error(`Error Fetching Overview ${department} Data: ${data.error}`);
       }
 
-      setData(data ? data : []);
+      setTimeout(() => {
+        setData(data ? data : []);
+      }, timeout);
     };
 
     fetchOverview();
   }, [department]);
 
-  if (!department || !data) return null;
+  if (!department || !data)
+    return (
+      <Page>
+        <>
+          <SkeletonLoading rootClassName="full-height-hero" height={'100%'} count={3} />
+        </>
+      </Page>
+    );
+
   return (
     <Page>
       <>

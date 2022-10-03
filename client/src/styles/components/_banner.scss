@@ -6,6 +6,10 @@
   max-width: 1000px;
   margin: 0 auto 50px;
 
+  @include breakpoint-max(sm) {
+    margin: 0 auto 30px;
+  }
+
   h3,
   p,
   strong {

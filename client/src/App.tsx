@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
 import './dist/main.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { Page } from './pages';
 
 function App() {

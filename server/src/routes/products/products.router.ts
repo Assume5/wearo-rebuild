@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProductsByDepartment } from "./products.controller";
+import { filterProducts, getProductsByDepartment } from "./products.controller";
 
 const productRouter = Router();
 
@@ -10,6 +10,8 @@ productRouter.get("/:department/:category", getProductsByDepartment);
 productRouter.get("/:productID");
 
 productRouter.post("/");
+
+productRouter.post("/filter/:department/:category", filterProducts);
 
 productRouter.put("/:productID");
 

@@ -17,8 +17,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Men Accessories",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -38,8 +38,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Men Accessories2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -61,7 +61,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "men-accessories.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/men-accessories.png",
               text: "Shop Men's Accessories",
             },
           },
@@ -72,8 +73,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Men Apparel",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -93,8 +94,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Men Apparel2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -116,7 +117,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "men-apparel.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/men-apparel.png",
               text: "Shop Men's Apparel",
             },
           },
@@ -127,8 +129,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Men Footwear",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -190,7 +192,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "men-footwear.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/men-footwear.png",
               text: "Shop Men's Footwear",
             },
           },
@@ -202,8 +205,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               {
                 id: "09e769fc-fbbb-4e0c-b5b5-37532c3a01c5",
                 name: "Product 1",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -235,8 +238,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Men Footwear2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -298,7 +301,7 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "men-new.png",
+              background_image: "https://wearo.s3.amazonaws.com/men-new.png",
               text: "Shop Men's New Collection",
             },
           },
@@ -316,8 +319,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Women Accessories",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -337,8 +340,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Women Accessories2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -360,7 +363,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "women-accessories.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/women-accessories.png",
               text: "Shop Women's Accessories",
             },
           },
@@ -371,8 +375,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Women Apparel",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -392,8 +396,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Women Apparel2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -415,7 +419,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "women-apparel.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/women-apparel.png",
               text: "Shop Women's Apparel",
             },
           },
@@ -426,8 +431,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Women Footwear",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -487,8 +492,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Women Footwear2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -550,7 +555,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "women-footwear.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/women-footwear.png",
               text: "Shop Women's Footwear",
             },
           },
@@ -561,8 +567,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product 4",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -596,7 +602,7 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "women-new.png",
+              background_image: "https://wearo.s3.amazonaws.com/women-new.png",
               text: "Shop Women's New Collection",
             },
           },
@@ -614,8 +620,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Kid Apparel",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -635,8 +641,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Kid Apparel2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -658,7 +664,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "kids-apparel.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/kids-apparel.png",
               text: "Shop Kids Apparel",
             },
           },
@@ -669,8 +676,8 @@ const navData: Prisma.parent_navCreateInput[] = [
             create: [
               {
                 name: "Product Kid Footwear",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -730,8 +737,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               },
               {
                 name: "Product Kid Footwear2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "black",
                 color_hex: "#000",
                 material: "cotton",
@@ -793,7 +800,8 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "kids-footwear.png",
+              background_image:
+                "https://wearo.s3.amazonaws.com/kids-footwear.png",
               text: "Shop Kids Footwear",
             },
           },
@@ -805,8 +813,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               {
                 id: "71507a65-6a0e-4bd3-8cba-614674958ff15",
                 name: "Product 2",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "red",
                 color_hex: "#FF0000",
                 material: "cotton",
@@ -839,8 +847,8 @@ const navData: Prisma.parent_navCreateInput[] = [
               {
                 id: "a0fd8676-1c78-468d-b5e5-d101b1f3178b",
                 name: "Product 3",
-                img1: "bg-placeholder.jpg",
-                img2: "bg-placeholder-2.jpg",
+                img1: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
+                img2: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
                 color: "white",
                 color_hex: "#fff",
                 material: "cotton",
@@ -874,7 +882,7 @@ const navData: Prisma.parent_navCreateInput[] = [
           },
           page_screen: {
             create: {
-              background_image: "kids-new.jpg",
+              background_image: "https://wearo.s3.amazonaws.com/kids-new.jpg",
               text: "Shop Kids New Collection",
             },
           },
@@ -884,27 +892,27 @@ const navData: Prisma.parent_navCreateInput[] = [
   },
 ];
 
-const homescrrenPrmo: Prisma.home_screen_promoCreateInput[] = [
+const homescreenPrmo: Prisma.home_screen_promoCreateInput[] = [
   {
     text: "Promo 1",
     name: "Product 1",
     product_id: "09e769fc-fbbb-4e0c-b5b5-37532c3a01c5",
     price: 50.99,
-    image: "/uploads/bg-placeholder.jpg",
+    image: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
   },
   {
     text: "Promo 2",
     name: "Product 2",
     product_id: "71507a65-6a0e-4bd3-8cba-614674958ff15",
     price: 50.99,
-    image: "/uploads/bg-placeholder.jpg",
+    image: "https://wearo.s3.amazonaws.com/bg-placeholder.jpg",
   },
   {
     text: "Promo 3",
     name: "Product 3",
     product_id: "a0fd8676-1c78-468d-b5e5-d101b1f3178b",
     price: 50.99,
-    image: "/uploads/bg-placeholder-2.jpg",
+    image: "https://wearo.s3.amazonaws.com/bg-placeholder-2.jpg",
   },
 ];
 
@@ -928,7 +936,7 @@ async function main() {
     console.log(`Created Nav: ${nav.text}`);
   }
 
-  for (const p of homescrrenPrmo) {
+  for (const p of homescreenPrmo) {
     const promo = await prisma.home_screen_promo.create({
       data: p,
     });

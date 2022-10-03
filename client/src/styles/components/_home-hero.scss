@@ -6,10 +6,6 @@
   overflow: hidden;
   gap: $padding4 0;
 
-  @include breakpoint-max(lg) {
-    height: 100vh;
-  }
-
   @include breakpoint-max(md) {
     flex-direction: column-reverse;
     overflow: hidden;
@@ -17,7 +13,7 @@
 
   @include breakpoint-max(sm) {
     height: auto;
-    margin: $padding5 0;
+    margin: 0;
   }
 
   .promo {
@@ -36,10 +32,12 @@
     }
 
     .image-container {
-      width: 80%;
+      min-width: calc(80% - 32px);
       overflow: hidden;
       height: auto;
       border-radius: 25px;
+      min-height: 700px;
+      max-height: 700px;
 
       @include breakpoint-max(md) {
         width: 100%;
@@ -101,7 +99,7 @@
     }
 
     .slider-lists {
-      width: 20%;
+      min-width: calc(20% - 32px);
 
       @include breakpoint-max(md) {
         display: flex;
@@ -164,10 +162,6 @@
             width: 100%;
             height: 100%;
             transition: width 5s cubic-bezier(0, 0, 0, 0);
-
-            @include breakpoint-max(md) {
-              display: none;
-            }
           }
 
           img {
@@ -232,42 +226,6 @@
 
     svg {
       margin-right: $padding3;
-    }
-  }
-
-  .promo-hero-modal {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    background-color: $mineShaftBackground;
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease-out;
-    color: $white;
-
-    &.modal-up {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 50px;
-      right: 50px;
-
-      svg {
-        font-size: 40px;
-        cursor: pointer;
-        color: $white;
-      }
     }
   }
 }

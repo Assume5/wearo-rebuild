@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
-    <div className="footer">
+    <footer className="footer">
       <div className="footer-col">
         <p className="title">About PICKO</p>
         <p className="footer-link">
@@ -58,6 +58,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };

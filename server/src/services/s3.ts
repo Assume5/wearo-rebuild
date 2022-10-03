@@ -24,8 +24,3 @@ export const uploadImage = (file: Express.Multer.File) => {
     })
     .promise();
 };
-
-export const getImage = (key: string) => {
-  const params = { Bucket: bucketName, Key: key };
-  return s3.getSignedUrlPromise("getObject", params);
-};

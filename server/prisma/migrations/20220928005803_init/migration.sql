@@ -156,6 +156,7 @@ CREATE TABLE "product" (
     "type" TEXT NOT NULL,
     "gender" TEXT NOT NULL,
     "checkout_count" INTEGER NOT NULL DEFAULT 0,
+    "create_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
 );

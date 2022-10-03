@@ -1,14 +1,15 @@
-import { faCircleUser, faHeart, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faHeart, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IHeader } from '../../types';
-import { serverUrl } from '../../utils/constants';
-import { trimDash, trimSpace } from '../../utils/function';
-
+import { serverUrl, timeout } from '../../utils/constants';
+import { HeaderLinks } from './HeaderLinks';
+import { MobileHeader } from './MobileHeader';
 export const Header = () => {
   const [data, setData] = useState<IHeader[]>();
   const navigate = useNavigate();
+  const isMobile = window.innerWidth <= 768;
 
   useEffect(() => {
     const fetchHeader = async () => {
@@ -25,15 +26,22 @@ export const Header = () => {
         console.error(`Error Fetching Header Data: ${data.error}`);
       }
 
-      setData(data.data);
+      setTimeout(() => {
+        setData(data.data);
+      }, timeout);
     };
     fetchHeader();
   }, []);
+
   return (
-    <div className="header">
-      <div className="logo" onClick={() => navigate('/')}>
-        <img src="/logo.png" />
+    <nav className="header">
+      <div className="header-left">
+        {isMobile && <MobileHeader data={data} />}
+        <div className="logo" onClick={() => navigate('/')}>
+          <img src="/logo.png" />
+        </div>
       </div>
+
       <div className="content">
         <div className="user">
           <FontAwesomeIcon icon={faCircleUser} />
@@ -47,42 +55,7 @@ export const Header = () => {
           <div className="dot"></div>
         </div>
       </div>
-      {data && (
-        <div className="links">
-          {data.map((item) => {
-            return (
-              <div className="links-container" key={item.text}>
-                <h4>{item.text}</h4>
-                <div className="categories">
-                  <div className="view-all">
-                    <button
-                      onClick={() => {
-                        navigate(`/products/${item.text}`);
-                      }}
-                    >
-                      View All
-                    </button>
-                  </div>
-                  <div className="categories-container">
-                    {item.category.map((category) => {
-                      return (
-                        <div key={category.category}>
-                          <p
-                            className="animate-bottom"
-                            onClick={() => navigate(`products/${item.text}/${trimSpace(category.category)}`)}
-                          >
-                            {trimDash(category.category)}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
+      {!isMobile && <HeaderLinks data={data} />}
+    </nav>
   );
 };

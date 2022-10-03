@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { IPromo } from '../../types/page-option';
+import { SkeletonLoading } from '../Skeleton/SkeletonLoading';
+import { LazyLoad } from '../LazyLoad/LazyLoad';
 
 interface Props {
-  data: IPromo[];
+  data: IPromo[] | undefined;
 }
 
 export const PromoHero: React.FC<Props> = ({ data }) => {
@@ -14,14 +16,14 @@ export const PromoHero: React.FC<Props> = ({ data }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data.length) {
+    if (data && data.length) {
       setCurrentSlideData(data[0].text);
       setSlideIndexData(0);
     }
   }, [data]);
 
   useEffect(() => {
-    if (window.innerWidth >= 768) {
+    if (data) {
       const len = data.length;
       const nextSlide = setTimeout(() => {
         if (slideIndexData + 1 === len) {
@@ -81,6 +83,8 @@ export const PromoHero: React.FC<Props> = ({ data }) => {
     navigate(`/item/${keyWithDash}/${id}`);
   };
 
+  if (!data) return <SkeletonLoading rootClassName="full-height-hero" height={'100%'} />;
+
   return (
     <div className="promo-hero">
       <div className="promo">
@@ -92,7 +96,7 @@ export const PromoHero: React.FC<Props> = ({ data }) => {
                 key={item.id}
                 onClick={() => onHeroImageClick(item.text, item.text)}
               >
-                <img src={item.image} alt="" />
+                <LazyLoad src={item.image} alt="" />
                 <div className="overlay-text">
                   <p>{item.text}</p>
                 </div>

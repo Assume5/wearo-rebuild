@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Banner } from '../../components/Banner/Banner';
-import { FullHeightHero } from '../../components/Hero/FullHeightHero';
 import { PromoHero } from '../../components/Hero/PromoHero';
+import { NewCollection } from '../../components/NewCollection/NewCollection';
 import { Page } from '../../components/Page/Page';
 import { IBanner, INew, IPromo } from '../../types/page-option';
-import { serverUrl } from '../../utils/constants';
-import { trimSpace } from '../../utils/function';
+import { serverUrl, timeout } from '../../utils/constants';
 
 export const Home = () => {
   const [banner, setBanner] = useState<IBanner>();
@@ -28,34 +27,21 @@ export const Home = () => {
       }
 
       const { banner, promo, newCollection } = data;
-      setBanner(banner ? banner[0] : {});
-      setPromo(promo ? promo : []);
-      setNewCollection(newCollection ? newCollection : []);
+
+      setTimeout(() => {
+        setBanner(banner ? banner[0] : {});
+        setPromo(promo ? promo : []);
+        setNewCollection(newCollection ? newCollection : []);
+      }, timeout);
     };
     fetchData();
   }, []);
   return (
     <Page rootClass="home">
       <>
-        {promo && banner && newCollection && (
-          <>
-            <Banner banner={banner} />
-            <PromoHero data={promo} />
-            {newCollection.map((parent) => {
-              const pageScreen = parent.category[0].page_screen[0];
-              if (!pageScreen) return null;
-              return (
-                <FullHeightHero
-                  bgImg={pageScreen.background_image}
-                  overlay={true}
-                  text={pageScreen.text}
-                  key={parent.text}
-                  textLink={`/products/${parent.text}/${trimSpace(parent.category[0].category)}`}
-                />
-              );
-            })}
-          </>
-        )}
+        <Banner banner={banner} />
+        <PromoHero data={promo} />
+        <NewCollection newCollection={newCollection} />
       </>
     </Page>
   );

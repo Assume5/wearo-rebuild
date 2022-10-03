@@ -24,3 +24,48 @@ export type IProduct = {
   type: string;
   product_size: ISize[];
 };
+
+export type IFilterColor = {
+  [key: string]: string;
+};
+
+export type IFilter = {
+  size: string[];
+  brand: string[];
+  color: string[];
+  type: string[];
+  material: string[];
+  sortBy: string[];
+};
+
+export type ISearchParams = {
+  pageSize: string;
+  sortBy: string;
+  product_size: string;
+  brand: string;
+  color: string;
+  type: string;
+  material: string;
+};
+
+export type IParamsSize = {
+  product_size: {
+    some: {
+      size: {
+        contains: string;
+      };
+    };
+  };
+};
+
+export type IParamsType = {
+  type: {
+    contains: string;
+  };
+};
+
+export type IParams = {
+  [key: string]: {
+    contains: string;
+  };
+};

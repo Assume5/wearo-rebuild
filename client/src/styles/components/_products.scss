@@ -1,6 +1,14 @@
 .product {
+  .h1 {
+    text-transform: capitalize;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid $white;
+  }
+
   .products-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 
     @include breakpoint-max(lg) {
@@ -36,24 +44,26 @@
           height: 80vw;
         }
 
-        &:hover {
-          .font-img {
-            transform: scale(0.95);
-            opacity: 0;
-            visibility: hidden;
+        .img-container {
+          &:hover {
+            .font-img {
+              transform: scale(0.95);
+              opacity: 0;
+              visibility: hidden;
+            }
+
+            .back-img {
+              opacity: 1;
+              visibility: visible;
+            }
           }
 
-          .back-img {
-            opacity: 1;
-            visibility: visible;
-          }
-        }
-
-        &:not(:hover) {
-          .back-img {
-            transform: scale(0.95);
-            opacity: 0;
-            visibility: hidden;
+          &:not(:hover) {
+            .back-img {
+              transform: scale(0.95);
+              opacity: 0;
+              visibility: hidden;
+            }
           }
         }
 
@@ -68,6 +78,14 @@
         .back-img {
           opacity: 0;
           visibility: hidden;
+        }
+
+        .not-favorite {
+          &:hover {
+            .not-favorite {
+              display: none;
+            }
+          }
         }
 
         svg {
@@ -100,6 +118,38 @@
           margin-right: 5px;
         }
       }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      background-color: $grayBackground;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+      border: 5px solid $white;
+      border-top: 5px solid $gray;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
     }
   }
 }
