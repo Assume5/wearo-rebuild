@@ -38,7 +38,7 @@ export const ProductsOverview = () => {
     return (
       <Page>
         <>
-          <SkeletonLoading rootClassName="full-height-hero" height={'100%'} count={3} />
+          <SkeletonLoading height={'100vh'} count={3} />
         </>
       </Page>
     );

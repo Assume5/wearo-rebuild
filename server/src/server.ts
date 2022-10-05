@@ -1,5 +1,6 @@
 const http = require("http");
 import app from "./app";
+import { redisClient } from "./services/redis";
 
 // import { createAdapter } from "@socket.io/cluster-adapter";
 // const { setupWorker } = require("@socket.io/sticky");
@@ -12,7 +13,9 @@ const server = http.createServer(app);
 
 const startServer = async () => {
   try {
-    server.listen(PORT, () => {
+    server.listen(PORT, async () => {
+      redisClient.on("error", (err) => console.log("Redis Client Error", err));
+      await redisClient.connect();
       console.log(`Listening on port ${PORT}`);
     });
   } catch (err) {
