@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite --host",
-    "build": "tsc && vite build",
+    "build": "tsc && npm run build-css && vite build",
     "preview": "vite preview",
     "build-css": "node-sass --output-style compressed  src/styles/ -o src/dist/",
     "watch-css": "node-sass -w --output-style compressed  src/styles/ -o src/dist/",
