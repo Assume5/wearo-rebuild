@@ -127,7 +127,10 @@
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 100;
+    z-index: 1000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &::before {
       content: '';
@@ -140,10 +143,7 @@
 
     &::after {
       content: '';
-      position: absolute;
-      transform: translate(-50%, -50%);
-      left: 50%;
-      top: 50%;
+      position: relative;
       border: 5px solid $white;
       border-top: 5px solid $gray;
       border-radius: 50%;

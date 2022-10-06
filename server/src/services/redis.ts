@@ -1,6 +1,6 @@
 import { createClient } from "redis";
 require("dotenv").config();
-const REDIS_EXPIRE = 5;
+const REDIS_EXPIRE = 7 * 24 * 60 * 60;
 const REDIS_URL = process.env.REDIS_URL || "localhost:6379";
 const PASSWORD = process.env.REDIS_PASSWORD || null;
 

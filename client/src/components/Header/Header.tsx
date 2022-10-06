@@ -36,7 +36,7 @@ export const Header = () => {
   return (
     <nav className="header">
       <div className="header-left">
-        {isMobile && <MobileHeader data={data} />}
+        <MobileHeader data={data} />
         <div className="logo" onClick={() => navigate('/')}>
           <img src="/logo.png" />
         </div>
@@ -55,7 +55,7 @@ export const Header = () => {
           <div className="dot"></div>
         </div>
       </div>
-      {!isMobile && <HeaderLinks data={data} />}
+      <HeaderLinks data={data} className="desktop" />
     </nav>
   );
 };

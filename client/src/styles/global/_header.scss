@@ -134,6 +134,12 @@
     text-transform: capitalize;
     gap: 0 5vw;
 
+    &.desktop {
+      @include breakpoint-max(md) {
+        display: none;
+      }
+    }
+
     &-container {
       &:hover {
         h4 {
@@ -191,6 +197,12 @@
 .mobile-nav {
   height: 40px;
   margin-right: 10px;
+  display: none;
+
+  @include breakpoint-max(md) {
+    display: block;
+  }
+
   &.active {
     .line1 {
       transform: translate(0, 11px) rotate(-45deg);

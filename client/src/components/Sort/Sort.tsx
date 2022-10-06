@@ -1,8 +1,7 @@
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faBars, faList, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { IFilter, IParams, IParamsSize, IParamsType, IProduct, ISearchParams } from '../../types/product';
-import { setParams } from '../../utils/function';
 import { SortItem } from './SortItem';
 
 interface Props {
@@ -90,20 +89,33 @@ export const Sort = ({
     }
   };
 
+  const onMobileFilterClick = () => {
+    const container = document.querySelector('.product-filter-container');
+    if (!container) return;
+
+    container.classList.toggle('active');
+  };
+
   if (!filter) return null;
 
   return (
     <div className="product-filter">
       <SortItem items={filter.sortBy} rootClass={'sort-by'} header={'Sort By'} onChange={onChange} />
-      {Object.keys(filter).map((key) => {
-        const filterItem = filter[key as keyof IFilter];
-        if (key === 'sortBy') return null;
-        return (
-          <React.Fragment key={key}>
-            <SortItem items={filterItem} rootClass={key} header={key} onChange={onChange} />
-          </React.Fragment>
-        );
-      })}
+      <span className="mobile-filter" onClick={() => onMobileFilterClick()}>
+        <FontAwesomeIcon icon={faList} /> Filter
+      </span>
+      <div className="product-filter-container">
+        <FontAwesomeIcon icon={faTimes} className="filter-close" onClick={() => onMobileFilterClick()} />
+        {Object.keys(filter).map((key) => {
+          const filterItem = filter[key as keyof IFilter];
+          if (key === 'sortBy') return null;
+          return (
+            <React.Fragment key={key}>
+              <SortItem items={filterItem} rootClass={key} header={key} onChange={onChange} />
+            </React.Fragment>
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ interface Props {
 
 export const MobileHeader = ({ data }: Props) => {
   const navRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     if (navRef.current) {
       const links = navRef.current.querySelectorAll('.links-container');

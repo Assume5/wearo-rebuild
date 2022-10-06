@@ -6,9 +6,10 @@ import { SkeletonLoading } from '../Skeleton/SkeletonLoading';
 
 interface Props {
   data: IHeader[] | undefined;
+  className?: string;
 }
 
-export const HeaderLinks = ({ data }: Props) => {
+export const HeaderLinks: React.FC<Props> = ({ data, className }) => {
   const navigate = useNavigate();
 
   if (!data) {
@@ -20,7 +21,7 @@ export const HeaderLinks = ({ data }: Props) => {
   }
 
   return (
-    <div className="links">
+    <div className={`links ${className}`}>
       {data.map((item) => {
         return (
           <div className="links-container" key={item.text}>
