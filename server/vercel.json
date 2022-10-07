@@ -1,5 +1,5 @@
 {
   "version": 2,
   "name": "nodejs-express",
-  "routes": [{ "src": "dist/(.*)", "dest": "dist" }]
+  "routes": [{ "src": "dist/routes(.*)", "dest": "dist/routes" }]
 }
