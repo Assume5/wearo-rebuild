@@ -9,11 +9,9 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
 
-const server = http.createServer(app);
-
 const startServer = async () => {
   try {
-    server.listen(PORT, async () => {
+    app.listen(PORT, async () => {
       redisClient.on("error", (err) => console.log("Redis Client Error", err));
       await redisClient.connect();
       console.log(`Listening on port ${PORT}`);
