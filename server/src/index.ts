@@ -18,7 +18,7 @@ const startServer = async () => {
     });
   } catch (err) {
     console.log(err);
-  } 
+  }
 };
 
 startServer();

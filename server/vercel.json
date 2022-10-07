@@ -1,5 +1,3 @@
 {
-  "version": 2,
-  "name": "nodejs-express",
-  "routes": [{ "src": "dist/routes(.*)", "dest": "dist/routes" }]
+  "rewrites": [{ "source": "/dist/routes(.*)", "destination": "/" }]
 }
