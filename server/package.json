@@ -2,7 +2,7 @@
   "name": "wearo-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc && prisma generate && prisma migrate deploy",
     "postinstall": "tsc",
