@@ -7,7 +7,7 @@ export const ProductLoading = () => {
     <Page rootClass="product-page">
       {
         <>
-          <SkeletonLoading rootClassName="product-images" inline={true} />
+          <SkeletonLoading rootClassName="carousel" inline={true} />
           <div className="product-details">
             <SkeletonLoading height={32} />
             <SkeletonLoading height={150} />

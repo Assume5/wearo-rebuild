@@ -21,68 +21,6 @@
     height: auto;
   }
 
-  .product-images {
-    width: 60%;
-    overflow: hidden;
-    position: relative;
-    height: 700px;
-
-    @include breakpoint-max(lg) {
-      width: 100%;
-      height: 350px;
-    }
-
-    .image-carousel {
-      transition: all 0.3s ease-out;
-      display: flex;
-      height: 100%;
-      backface-visibility: hidden;
-      position: relative;
-
-      .image-container {
-        width: 100%;
-        position: relative;
-
-        .overlay {
-          width: 100%;
-          height: 100%;
-          left: 0;
-          top: 0;
-          background-color: $gray;
-          position: absolute;
-          opacity: 0.1;
-        }
-      }
-    }
-
-    .images-navigator {
-      position: absolute;
-      display: flex;
-      flex-direction: row;
-      gap: 0 20px;
-      left: 50%;
-      bottom: 20px;
-      transform: translateX(-50%);
-
-      .navigator {
-        cursor: pointer;
-        width: 70px;
-        height: 10px;
-        border: 2px solid $white;
-        border-radius: 4px;
-        z-index: 100;
-
-        @include breakpoint-max(sm) {
-          width: 50px;
-        }
-
-        &.active {
-          background-color: $white;
-        }
-      }
-    }
-  }
-
   .product-details {
     width: 35%;
 
@@ -139,6 +77,46 @@
 
       @include breakpoint-max(lg) {
         width: 100%;
+      }
+    }
+  }
+
+  .images-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease-out;
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100%;
+
+      .image-container {
+        width: 100% !important;
+        height: 100% !important;
       }
     }
   }
