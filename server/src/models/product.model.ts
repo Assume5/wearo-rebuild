@@ -1,4 +1,5 @@
 import { prisma } from "../services/db";
+import { IObjParams } from "../types/product";
 
 export const getProductsByDepartmentDB = async (
   department: string,
@@ -78,22 +79,50 @@ export const filterProductsDB = async (
   }
 
   let where: any = {};
-  if (sizeParams.length && params.length) {
-    where = {
-      AND: [...sizeParams, ...params],
-    };
-  } else if (sizeParams.length) {
-    where = {
-      AND: sizeParams,
-    };
-  } else if (params.length) {
-    where = {
-      AND: params,
-    };
-  }
 
-  if (typeParams.length) {
-    where["OR"] = typeParams;
+  const objParams: IObjParams = {
+    brand: [],
+    color: [],
+    material: [],
+  };
+
+  params.forEach((obj: Object) => {
+    const key = Object.keys(obj)[0] as keyof IObjParams;
+    objParams[key].push(obj);
+  });
+
+  if (
+    !objParams.brand.length &&
+    !objParams.color.length &&
+    !objParams.material.length &&
+    !typeParams.length &&
+    !sizeParams.length
+  ) {
+    where = {};
+  } else {
+    where = {
+      AND: [],
+    };
+
+    if (objParams.color.length) {
+      where["AND"].push({ OR: objParams.color });
+    }
+
+    if (objParams.brand.length) {
+      where["AND"].push({ OR: objParams.brand });
+    }
+
+    if (objParams.material.length) {
+      where["AND"].push({ OR: objParams.material });
+    }
+
+    if (typeParams.length) {
+      where["AND"].push({ OR: typeParams });
+    }
+
+    if (sizeParams.length) {
+      where["AND"].push({ OR: sizeParams });
+    }
   }
 
   return await prisma.parent_nav.findUnique({
@@ -130,6 +159,42 @@ export const filterProductsDB = async (
             },
             orderBy: orderBy,
           },
+        },
+      },
+    },
+  });
+};
+
+export const getProductByIdDB = async (id: string) => {
+  return await prisma.product.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      name: true,
+      img1: true,
+      img2: true,
+      img3: true,
+      img4: true,
+      color: true,
+      material: true,
+      color_hex: true,
+      related_product_id: true,
+      description: true,
+      price: true,
+      brand: true,
+      category: {
+        select: {
+          category: true,
+        },
+      },
+      type: true,
+      gender: true,
+      product_size: {
+        select: {
+          size: true,
+          stock: true,
         },
       },
     },

@@ -25,3 +25,9 @@ export type ISearchParamsDB = {
     contains: string;
   }[];
 };
+
+export type IObjParams = {
+  brand: any[];
+  color: any[];
+  material: any[];
+};

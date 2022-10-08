@@ -39,40 +39,6 @@ export const PromoHero: React.FC<Props> = ({ data }) => {
     }
   }, [slideIndexData, currentSlideData, data]);
 
-  useLayoutEffect(() => {
-    if (window.innerWidth < 768) {
-      const container: HTMLDivElement | null = document.querySelector('.slider-lists');
-
-      if (container && container.scrollWidth > container.clientWidth) {
-        let mouseDown = false;
-        let startX: number, scrollLeft: number;
-
-        const dragging = (e: any) => {
-          mouseDown = true;
-          startX = e.pageX - container.offsetLeft;
-          scrollLeft = container.scrollLeft;
-        };
-
-        const stopDragging = (e: any) => {
-          mouseDown = false;
-        };
-
-        container.addEventListener('mousemove', (e: any) => {
-          e.preventDefault();
-          if (!mouseDown) {
-            return;
-          }
-          const x = e.pageX - container.offsetLeft;
-          const scroll = x - startX;
-          container.scrollLeft = scrollLeft - scroll;
-        });
-        container?.addEventListener('mousedown', dragging, false);
-        container?.addEventListener('mouseup', stopDragging, false);
-        container?.addEventListener('mouseleave', stopDragging, false);
-      }
-    }
-  });
-
   const onSliderClick = (key: string, i: number) => {
     setCurrentSlideData(key);
     setSlideIndexData(i);
