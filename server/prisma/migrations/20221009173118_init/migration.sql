@@ -69,7 +69,6 @@ CREATE TABLE "user" (
     "password" TEXT NOT NULL,
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
     "address1" TEXT,
     "address2" TEXT,
     "city" TEXT,
@@ -212,6 +211,12 @@ CREATE TABLE "order_details" (
 
     CONSTRAINT "order_details_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "guest_cookie_value_key" ON "guest"("cookie_value");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "parent_nav_text_key" ON "parent_nav"("text");

@@ -6,6 +6,8 @@
 
 ##### Node version >= 16.13.2
 
+##### TypeScript
+
 ##### PostgreSQL
 
 ##### Redis
@@ -21,6 +23,8 @@
 ##### PostgreSQL: Download in [PostgreSQL Official Site](https://www.postgresql.org/download/).
 
 ##### Redis: Download in [Redis Official Site](https://redis.io/download/)
+
+##### TypeScript: `npm install -g typescript`
 
 ### Using the App Locally
 

@@ -1,15 +1,18 @@
 import { faCircleUser, faHeart, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 import { IHeader } from '../../types';
 import { serverUrl, timeout } from '../../utils/constants';
+import { AuthForm } from '../Forms/AuthForm';
 import { HeaderLinks } from './HeaderLinks';
 import { MobileHeader } from './MobileHeader';
 export const Header = () => {
   const [data, setData] = useState<IHeader[]>();
   const navigate = useNavigate();
-  const isMobile = window.innerWidth <= 768;
+  const [showModal, setShowModal] = useState(false);
+  const userCtx = useContext(UserContext);
 
   useEffect(() => {
     const fetchHeader = async () => {
@@ -33,6 +36,11 @@ export const Header = () => {
     fetchHeader();
   }, []);
 
+  useEffect(() => {
+    //if has token check expires
+    //if no set guest cookie
+  }, [userCtx]);
+
   return (
     <nav className="header">
       <div className="header-left">
@@ -43,10 +51,17 @@ export const Header = () => {
       </div>
 
       <div className="content">
-        <div className="user">
-          <FontAwesomeIcon icon={faCircleUser} />
-          <span>Login</span>
-        </div>
+        {userCtx.user.isLogin ? (
+          <div className="user" onClick={() => navigate('/account')}>
+            <FontAwesomeIcon icon={faCircleUser} />
+            <span>{userCtx.user.firstName}</span>
+          </div>
+        ) : (
+          <div className="user" onClick={() => setShowModal(true)}>
+            <FontAwesomeIcon icon={faCircleUser} />
+            <span>Login</span>
+          </div>
+        )}
         <div className="favorites">
           <FontAwesomeIcon icon={faHeart} />
         </div>
@@ -56,6 +71,7 @@ export const Header = () => {
         </div>
       </div>
       <HeaderLinks data={data} className="desktop" />
+      <AuthForm setShowModal={setShowModal} show={showModal} />
     </nav>
   );
 };

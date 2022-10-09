@@ -44,9 +44,8 @@ export const PromoHero: React.FC<Props> = ({ data }) => {
     setSlideIndexData(i);
   };
 
-  const onHeroImageClick = (key: string, id: string) => {
-    const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
-    navigate(`/item/${keyWithDash}/${id}`);
+  const onHeroImageClick = (id: string) => {
+    navigate(`/product/${id}`);
   };
 
   if (!data) return <SkeletonLoading rootClassName="full-height-hero" height={'100%'} />;
@@ -60,7 +59,7 @@ export const PromoHero: React.FC<Props> = ({ data }) => {
               <div
                 className={`carousel-item ${currentSlideData === item.text ? 'active' : ''}`}
                 key={item.id}
-                onClick={() => onHeroImageClick(item.text, item.text)}
+                onClick={() => onHeroImageClick(item.product_id)}
               >
                 <LazyLoad src={item.image} alt="" />
                 <div className="overlay-text">
