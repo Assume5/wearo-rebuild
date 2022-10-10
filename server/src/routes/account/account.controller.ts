@@ -3,12 +3,15 @@ import bcrypt from "bcrypt";
 import {
   checkAccountExists,
   registerAccountDB,
+  registerGuest,
+  removeGuestByCookie,
 } from "../../models/account.model";
 import { User } from "../../types/account";
 import {
   generateAccessToken,
   generateRefreshToken,
 } from "../../utils/function";
+import { UserAuthInfo } from "../../types/interface";
 
 const saltRounds = 15;
 const salt = bcrypt.genSaltSync(saltRounds);
@@ -36,7 +39,7 @@ export const registerAccount = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, guestCookie } = req.body;
 
   if (!email || !password) {
     return res.status(400).json("Missing Fields");
@@ -56,6 +59,8 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json("Invalid username or password");
     }
 
+    guestCookie && (await removeGuestByCookie(guestCookie));
+
     const user: User = account;
 
     const accessToken = generateAccessToken(user);
@@ -69,4 +74,39 @@ export const login = async (req: Request, res: Response) => {
     console.log("ERROR ON LOGIN: ", error);
     return res.status(500).json("Unable to login, please try again later");
   }
+};
+
+export const loginGuest = async (req: Request, res: Response) => {
+  const { cookie } = req.body;
+  console.log(cookie);
+
+  if (!cookie) {
+    return res.status(400).json("Missing Cookies");
+  }
+
+  try {
+    await registerGuest(cookie);
+    return res.status(200).json("SUCCESS");
+  } catch (error) {
+    console.log("ERROR ON LOGIN GUEST: ", error);
+    return res.status(500).json(error);
+  }
+};
+
+export const checkToken = async (req: UserAuthInfo, res: Response) => {
+  if (req.tokenExpired) {
+    return res
+      .status(200)
+      .json({ success: false, error: "Token Expired / No Token" });
+  }
+
+  console.log(req.accessToken);
+
+  return res
+    .status(200)
+    .json({
+      success: true,
+      accessToken: req.accessToken || null,
+      fName: req.user.first_name,
+    });
 };

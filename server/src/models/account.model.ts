@@ -30,3 +30,19 @@ export const registerAccountDB = async (
     },
   });
 };
+
+export const registerGuest = async (cookie: string) => {
+  return await prisma.guest.create({
+    data: {
+      cookie_value: cookie,
+    },
+  });
+};
+
+export const removeGuestByCookie = async (cookie: string) => {
+  return await prisma.guest.delete({
+    where: {
+      cookie_value: cookie,
+    },
+  });
+};

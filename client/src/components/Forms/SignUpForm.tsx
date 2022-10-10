@@ -4,7 +4,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { serverUrl } from '../../utils/constants';
 
 interface Props {
-  setAuthState: React.Dispatch<React.SetStateAction<string>>;
+  setAuthState: (state: string) => void;
 }
 export const SignUpForm = ({ setAuthState }: Props) => {
   const [showPassword, setShowPassword] = useState(false);

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
 import { ScrollToTop } from '../components/ScrollToTop/ScrollToTop';
+import { Account } from './Account/Account';
 import { Home } from './Home/Home';
 import { Product } from './Product/Product';
 import { ProductsPage } from './Products/Products';
@@ -18,6 +19,7 @@ export const Page = () => {
         <Route path="/products/:department/" element={<ProductsOverview />} />
         <Route path="/products/:department/:category" element={<ProductsPage />} />
         <Route path="/product/:productID" element={<Product />} />
+        <Route path="account" element={<Account />} />
       </Routes>
       <Footer />
     </BrowserRouter>

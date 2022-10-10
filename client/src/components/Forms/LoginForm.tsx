@@ -1,12 +1,13 @@
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Cookies from 'js-cookie';
 import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { serverUrl } from '../../utils/constants';
 
 interface Props {
-  setAuthState: React.Dispatch<React.SetStateAction<string>>;
+  setAuthState: (state: string) => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -38,6 +39,7 @@ export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
     };
 
     const { email, password } = target;
+    const guestCookie = Cookies.get('guest_cookie');
 
     const res = await fetch(`${serverUrl}/account/login`, {
       method: 'POST',
@@ -47,6 +49,7 @@ export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
       body: JSON.stringify({
         email: email.value,
         password: password.value,
+        guestCookie: guestCookie,
       }),
     });
 
@@ -56,11 +59,10 @@ export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
       setErrorMessage(response);
     } else {
       setShowModal(false);
+      Cookies.remove('guest_cookie');
+      Cookies.set('access_token', response.accessToken, { expires: 7, secure: true });
+      Cookies.set('refresh_token', response.refreshToken, { expires: 7, secure: true });
       userCtx.setUser({ isLogin: true, checked: true, firstName: response.name });
-      //todo remove guest cookie, add token cookie
-      setTimeout(() => {
-        navigate('/account');
-      }, 300);
     }
 
     setLoading(false);

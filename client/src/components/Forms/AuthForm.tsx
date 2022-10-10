@@ -13,16 +13,28 @@ interface Props {
 export const AuthForm = ({ show, setShowModal }: Props) => {
   const [authState, setAuthState] = useState('login');
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (!show) return;
+  //   const container = document.querySelector('.auth-modal');
+  //   if (!container) return;
+  //   container.classList.remove('show');
+
+  //   setTimeout(() => {
+  //     container.classList.add('show');
+  //   }, 300);
+  // }, [authState]);
+
+  const changeAuthState = (state: string) => {
     if (!show) return;
     const container = document.querySelector('.auth-modal');
     if (!container) return;
     container.classList.remove('show');
 
     setTimeout(() => {
+      setAuthState(state);
       container.classList.add('show');
     }, 300);
-  }, [authState]);
+  };
 
   const onCloseClick = () => {
     setShowModal(false);
@@ -34,9 +46,9 @@ export const AuthForm = ({ show, setShowModal }: Props) => {
       <>
         <FontAwesomeIcon icon={faTimes} onClick={onCloseClick} />
         {authState === 'login' ? (
-          <LoginForm setAuthState={setAuthState} setShowModal={setShowModal} />
+          <LoginForm setAuthState={changeAuthState} setShowModal={setShowModal} />
         ) : (
-          <SignUpForm setAuthState={setAuthState} />
+          <SignUpForm setAuthState={changeAuthState} />
         )}
       </>
     </Modal>

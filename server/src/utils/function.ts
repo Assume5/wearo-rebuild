@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "./constants";
 
 export const generateAccessToken = (user: User) => {
   return sign(user, ACCESS_TOKEN_SECRET, {
-    expiresIn: "2h",
+    expiresIn: "30m",
   });
 };
 
