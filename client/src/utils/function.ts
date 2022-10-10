@@ -40,3 +40,13 @@ export const generateGuestCookie = async () => {
   if (!res.ok) console.error(response);
   else Cookies.set('guest_cookie', cookie, { expires: 7, path: '', secure: true });
 };
+
+export const headerOptionForToken = () => {
+  const accessToken = Cookies.get('access_token');
+  const refreshToken = Cookies.get('refresh_token');
+  return {
+    'content-type': 'application/json',
+    AuthorizationAccessToken: `Bearer ${accessToken}`,
+    AuthorizationRefreshToken: `Bearer ${refreshToken}`,
+  };
+};

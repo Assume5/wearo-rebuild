@@ -46,3 +46,172 @@ export const removeGuestByCookie = async (cookie: string) => {
     },
   });
 };
+
+export const getAccountDetailsDB = async (id: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      email: true,
+      first_name: true,
+      last_name: true,
+      phone: true,
+      shipping_first_name: true,
+      shipping_last_name: true,
+      address1: true,
+      address2: true,
+      city: true,
+      state: true,
+      zip: true,
+      orders: {
+        select: {
+          id: true,
+          order_date: true,
+          order_status: true,
+          total_pirce: true,
+        },
+      },
+      payment: {
+        select: {
+          id: true,
+          card_first_name: true,
+          card_last_name: true,
+          card_exp_date: true,
+          billing_address1: true,
+          billing_address2: true,
+          city: true,
+          state: true,
+          zip: true,
+          card_number: true,
+        },
+      },
+    },
+  });
+};
+
+export const updatePersonalDB = async (
+  id: string,
+  first_name: string,
+  last_name: string,
+  phone: string
+) => {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      first_name,
+      last_name,
+      phone,
+    },
+  });
+};
+
+export const updateAddressDB = async (
+  id: string,
+  shipping_first_name: string,
+  shipping_last_name: string,
+  address1: string,
+  address2: string,
+  city: string,
+  state: string,
+  zip: string
+) => {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      shipping_first_name,
+      shipping_last_name,
+      address1,
+      address2,
+      city,
+      state,
+      zip,
+    },
+  });
+};
+
+export const updatePasswordDB = async (id: string, hashedPassword: string) => {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+};
+
+export const checkCreditCardExists = async (id: string, cc: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      payment: {
+        where: {
+          card_number: cc,
+        },
+      },
+    },
+  });
+};
+
+export const editCreditCardDB = async (
+  id: string,
+  fName: string,
+  lName: string,
+  address1: string,
+  address2: string,
+  city: string,
+  state: string,
+  zip: string,
+  card: string,
+  date: string
+) => {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      payment: {
+        create: {
+          card_first_name: fName,
+          card_last_name: lName,
+          card_number: card,
+          card_exp_date: date,
+          billing_address1: address1,
+          billing_address2: address2,
+          city,
+          state,
+          zip,
+        },
+      },
+    },
+    select: {
+      payment: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+};
+
+export const deletePaymentDB = async (id: string, paymentId: number) => {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      payment: {
+        delete: {
+          id: paymentId,
+        },
+      },
+    },
+  });
+};

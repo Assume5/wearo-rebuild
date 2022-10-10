@@ -113,6 +113,10 @@
         opacity: 0;
         visibility: hidden;
 
+        @include breakpoint-max(sm) {
+          display: none;
+        }
+
         a,
         p {
           cursor: pointer;

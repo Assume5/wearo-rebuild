@@ -8,7 +8,7 @@ interface Props {
 
 export const MobileHeader = ({ data }: Props) => {
   const navRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     if (navRef.current) {
       const links = navRef.current.querySelectorAll('.links-container');
@@ -33,7 +33,7 @@ export const MobileHeader = ({ data }: Props) => {
       <div
         className="hamburger-lines"
         onClick={(e) => {
-          console.log(e.currentTarget.parentElement!.classList.toggle('active'));
+          e.currentTarget.parentElement!.classList.toggle('active');
         }}
       >
         <span className="line line1"></span>

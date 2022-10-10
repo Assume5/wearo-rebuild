@@ -1,20 +1,23 @@
 import { faCheck, faCircleNotch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { FormEvent, useEffect, useState } from 'react';
-import { serverUrl } from '../../utils/constants';
+import Cookies from 'js-cookie';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../contexts/UserContext';
+import { IAccount } from '../../types/account';
+import { serverUrl, timeout } from '../../utils/constants';
+import { generateGuestCookie, headerOptionForToken } from '../../utils/function';
 
 interface Props {
-  setAuthState: (state: string) => void;
+  setEditPassword: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const SignUpForm = ({ setAuthState }: Props) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState('');
-  const [keyUp, setKeyUp] = useState(false);
-  const [passwordPass, setPasswordPass] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
-  const regexSpec = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+export const EditPassword = ({ setEditPassword }: Props) => {
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordPass, setPasswordPass] = useState(true);
+  const [error, setError] = useState('');
+  const userCtx = useContext(UserContext);
+
   const regexCap = /[A-Z]/;
   const regexLow = /[a-z]/;
   const regexNum = /[0-9]/;
@@ -30,8 +33,8 @@ export const SignUpForm = ({ setAuthState }: Props) => {
   }, [showPassword]);
 
   const onPasswordChange = (val: string) => {
-    document.querySelector('.password input')?.classList.remove('error');
-    document.querySelector('.confirm-password input')?.classList.remove('error');
+    document.querySelector('.edit-password .new-password input')?.classList.remove('error');
+    document.querySelector('.edit-password .confirm-new-password input')?.classList.remove('error');
 
     const validContainer = document.querySelector('.password .valid');
 
@@ -86,83 +89,91 @@ export const SignUpForm = ({ setAuthState }: Props) => {
     if (regexNum.test(val) && val.length >= 8 && regexLow.test(val) && regexCap.test(val)) setPasswordPass(true);
   };
 
-  const onSignUpSubmit = async (e: FormEvent) => {
+  const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setError('');
     setLoading(true);
-    setErrorMessage('');
-    const password = document.querySelector('.password input') as HTMLInputElement;
-    const confirmPassword = document.querySelector('.confirm-password input') as HTMLInputElement;
+
+    const newPassword = document.querySelector('.edit-password .new-password input') as HTMLInputElement;
+    const confirmNewPassword = document.querySelector('.edit-password .confirm-new-password input') as HTMLInputElement;
+
     if (!passwordPass) {
-      password?.classList.add('error');
+      newPassword?.classList.add('error');
       setLoading(false);
       return;
     }
 
-    if (password.value !== confirmPassword.value) {
-      password.classList.add('error');
-      confirmPassword.classList.add('error');
-      setLoading(false);
-      return;
-    }
-
-    const formData = e.target as HTMLFormElement & {
-      email: { value: string };
-      fName: { value: string };
-      lName: { value: string };
+    const target = e.target as HTMLFormElement & {
       password: { value: string };
+      'new-pw': { value: string };
+      'confirm-new-pw': { value: string };
     };
 
-    const { email, fName, lName, password: pw } = formData;
+    const { password: currentPassword, 'new-pw': password, 'confirm-new-pw': confirmPassword } = target;
 
-    const res = await fetch(`${serverUrl}/account/register`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
+    if (password.value !== confirmPassword.value) {
+      newPassword.classList.add('error');
+      confirmNewPassword.classList.add('error');
+      setLoading(false);
+      return;
+    }
+
+    const res = await fetch(`${serverUrl}/account/edit/password`, {
+      method: 'PUT',
+      headers: headerOptionForToken(),
       body: JSON.stringify({
-        email: email.value,
-        fName: fName.value,
-        lName: lName.value,
-        password: pw.value,
+        currentPassword: currentPassword.value,
+        newPassword: password.value,
+        confirmNewPassword: confirmPassword.value,
       }),
     });
 
     const response = await res.json();
-    if (!res.ok) {
-      setErrorMessage(response);
-    } else {
-      setAuthState('login');
+
+    if (!res.ok && res.status === 500) {
+      console.error(`Error on Updating Password: ${response}`);
+      setLoading(false);
+      setError('Unable to update, please try again later!');
+      return;
     }
-    setLoading(false);
+
+    if (!res.ok && res.status === 401) {
+      setError('Incorrect Password');
+      setLoading(false);
+      return;
+    }
+
+    if (!response.success) {
+      Cookies.remove('access_token');
+      Cookies.remove('refresh_token');
+      userCtx.setUser({ isLogin: false, checked: true });
+      generateGuestCookie();
+    } else {
+      if (response.accessToken) {
+        Cookies.set('access_token', response.accessToken, { expires: 7, secure: true });
+      }
+      if (response.error) {
+        setError(response.error);
+      } else {
+        setTimeout(() => {
+          setEditPassword(false);
+          setLoading(false);
+        }, timeout);
+      }
+    }
   };
 
   return (
-    <>
-      <h2>Sign Up</h2>
-      <form onSubmit={onSignUpSubmit}>
-        <div className="input email">
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" placeholder="Enter Your Email" required />
-        </div>
-        <div className="input first-name">
-          <label htmlFor="fName">First Name</label>
-          <input type="text" name="fName" placeholder="Enter Your First Name" required />
-        </div>
-        <div className="input last-name">
-          <label htmlFor="lName">Last Name</label>
-          <input type="text" name="lName" placeholder="Enter Your Last Name" required />
-        </div>
+    <div className="edit-form edit-password">
+      <form onSubmit={onFormSubmit}>
         <div className="input password">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter Your Password"
-            onChange={(e) => onPasswordChange(e.target.value)}
-            required
-          />
+          <label htmlFor="current-pw">Current Password</label>
+          <input type="password" name="password" required />
+        </div>
+        <div className="input new-password password">
+          <label htmlFor="new-pw">New Password</label>
+          <input type="password" name="new-pw" onChange={(e) => onPasswordChange(e.target.value)} required />
           <span onClick={() => setShowPassword(!showPassword)}>{showPassword === true ? 'HIDE' : 'SHOW'}</span>
-
           <div className={`valid active`}>
             <p className="eight-characters">
               8 Characters
@@ -186,31 +197,15 @@ export const SignUpForm = ({ setAuthState }: Props) => {
             </p>
           </div>
         </div>
-        <div className="input confirm-password password">
-          <label htmlFor="confirm-password">Confirm Password</label>
-          <input
-            type="password"
-            name="confirm-password"
-            placeholder="Confirm Your Password"
-            onChange={() => {
-              document.querySelector('.password input')?.classList.remove('error');
-              document.querySelector('.confirm-password input')?.classList.remove('error');
-            }}
-            required
-          />
+        <div className="input confirm-new-password password">
+          <label htmlFor="phone">Confirm New Password</label>
+          <input type="password" name="confirm-new-pw" required />
         </div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <button className="sign-in-button" disabled={loading}>
-          Sign Up {loading && <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />}
+        {error && <p className="error-message">{error}</p>}
+        <button disabled={loading}>
+          Update {loading && <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />}
         </button>
       </form>
-      <button
-        onClick={() => {
-          setAuthState('login');
-        }}
-      >
-        Back to Sign In
-      </button>
-    </>
+    </div>
   );
 };

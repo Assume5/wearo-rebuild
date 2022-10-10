@@ -1,10 +1,17 @@
-import { json, Request, Response } from "express";
+import { json, Request, RequestHandler, Response } from "express";
 import bcrypt from "bcrypt";
 import {
   checkAccountExists,
+  checkCreditCardExists,
+  deletePaymentDB,
+  editCreditCardDB,
+  getAccountDetailsDB,
   registerAccountDB,
   registerGuest,
   removeGuestByCookie,
+  updateAddressDB,
+  updatePasswordDB,
+  updatePersonalDB,
 } from "../../models/account.model";
 import { User } from "../../types/account";
 import {
@@ -63,8 +70,16 @@ export const login = async (req: Request, res: Response) => {
 
     const user: User = account;
 
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
+    const userSign: User = {
+      email: account.email,
+      first_name: account.first_name,
+      last_name: account.last_name,
+      id: account.id,
+    };
+
+    const accessToken = generateAccessToken(userSign);
+    const refreshToken = generateRefreshToken(userSign);
+
     return res.status(200).json({
       name: user.first_name,
       accessToken,
@@ -78,7 +93,6 @@ export const login = async (req: Request, res: Response) => {
 
 export const loginGuest = async (req: Request, res: Response) => {
   const { cookie } = req.body;
-  console.log(cookie);
 
   if (!cookie) {
     return res.status(400).json("Missing Cookies");
@@ -100,13 +114,180 @@ export const checkToken = async (req: UserAuthInfo, res: Response) => {
       .json({ success: false, error: "Token Expired / No Token" });
   }
 
-  console.log(req.accessToken);
+  return res.status(200).json({
+    success: true,
+    accessToken: req.accessToken || null,
+    fName: req.user.first_name,
+  });
+};
 
-  return res
-    .status(200)
-    .json({
+export const getAccountDetails = async (req: UserAuthInfo, res: Response) => {
+  if (req.tokenExpired) {
+    return res
+      .status(200)
+      .json({ success: false, error: "Token Expired / No Token" });
+  }
+
+  try {
+    const { id } = req.user;
+    const data = await getAccountDetailsDB(id);
+    const tempPayment = data.payment;
+    tempPayment.forEach((key, i) => {
+      tempPayment[i].card_number = tempPayment[i].card_number.slice(-4);
+    });
+    data.payment = tempPayment;
+    return res.status(200).json({
       success: true,
       accessToken: req.accessToken || null,
-      fName: req.user.first_name,
+      data,
     });
+  } catch (error) {
+    console.log("ERROR ON GET ACCOUNT DETAILS: ", error);
+    return res.status(500).json(error);
+  }
+};
+
+export const editPersonal: RequestHandler = async (req: UserAuthInfo, res) => {
+  const { fName, lName, phone } = req.body;
+  if (req.tokenExpired) {
+    return res
+      .status(200)
+      .json({ success: false, error: "Token Expired / No Token" });
+  }
+
+  try {
+    const id = req.user.id;
+    await updatePersonalDB(id, fName, lName, phone);
+    return res
+      .status(200)
+      .json({ success: true, accessToken: req.accessToken || null });
+  } catch (error) {
+    console.log("ERROR ON UPDATING PERSONAL DETAILS: ", error);
+    return res.status(500).json(error);
+  }
+};
+
+export const editAddress: RequestHandler = async (req: UserAuthInfo, res) => {
+  const { fName, lName, address1, address2, city, zipcode, state } = req.body;
+
+  if (req.tokenExpired) {
+    return res
+      .status(200)
+      .json({ success: false, error: "Token Expired / No Token" });
+  }
+
+  try {
+    const id = req.user.id;
+    await updateAddressDB(
+      id,
+      fName,
+      lName,
+      address1,
+      address2,
+      city,
+      state,
+      zipcode
+    );
+    return res
+      .status(200)
+      .json({ success: true, accessToken: req.accessToken || null });
+  } catch (error) {
+    console.log("ERROR ON UPDATING ADDRESS DETAILS: ", error);
+    return res.status(500).json(error);
+  }
+};
+
+export const editPassword: RequestHandler = async (req: UserAuthInfo, res) => {
+  const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+  if (req.tokenExpired) {
+    return res
+      .status(200)
+      .json({ success: false, error: "Token Expired / No Token" });
+  }
+
+  try {
+    const { id, email } = req.user;
+    const account = await checkAccountExists(email);
+
+    const accountPassword = account.password;
+    const result = await bcrypt.compare(currentPassword, accountPassword);
+
+    if (!result) {
+      return res.status(401).json({ success: true, error: "Invalid password" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    await updatePasswordDB(id, hashedPassword);
+
+    return res
+      .status(200)
+      .json({ success: true, accessToken: req.accessToken || null });
+  } catch (error) {
+    console.log("ERROR ON UPDATING PASSWORD: ", error);
+    return res.status(500).json(error);
+  }
+};
+
+export const editPayment = async (req: UserAuthInfo, res: Response) => {
+  const { fName, lName, address1, address2, city, state, zip, card, date } =
+    req.body;
+
+  if (req.tokenExpired) {
+    return res
+      .status(200)
+      .json({ success: false, error: "Token Expired / No Token" });
+  }
+
+  try {
+    const { id } = req.user;
+    const cc = await checkCreditCardExists(id, card);
+    if (cc.payment.length) {
+      return res
+        .status(409)
+        .json({ success: true, error: "Credit Card Conflict" });
+    }
+
+    const data = await editCreditCardDB(
+      id,
+      fName,
+      lName,
+      address1,
+      address2,
+      city,
+      state,
+      zip,
+      card,
+      date
+    );
+
+    return res.status(200).json({
+      success: true,
+      accessToken: req.accessToken || null,
+      id: data.payment.at(-1).id,
+    });
+  } catch (error) {
+    console.log("ERROR ON ADDING PAYMENT: ", error);
+    return res.status(500).json(error);
+  }
+};
+
+export const deletePayment = async (req: UserAuthInfo, res: Response) => {
+  const { id } = req.params;
+  if (req.tokenExpired) {
+    return res
+      .status(200)
+      .json({ success: false, error: "Token Expired / No Token" });
+  }
+  try {
+    await deletePaymentDB(req.user.id, +id);
+    return res.status(200).json({
+      success: true,
+      accessToken: req.accessToken || null,
+    });
+  } catch (error) {
+    console.log("ERROR ON DELETING PAYMENT: ", error);
+    return res.status(500).json(error);
+  }
 };

@@ -63,6 +63,8 @@ model user {
   first_name String
   last_name String
   phone String?
+  shipping_first_name String?
+  shipping_last_name String?
   address1 String?
   address2 String?
   city String?

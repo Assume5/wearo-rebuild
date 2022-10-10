@@ -16,7 +16,7 @@ export const Product = () => {
     const fetchProductData = async () => {
       const res = await fetch(`${serverUrl}/product/${productID}`);
       const response = await res.json();
-      console.log(response);
+
       setTimeout(() => {
         setData(response);
       }, timeout);

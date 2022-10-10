@@ -49,7 +49,6 @@ export const ProductsPage = () => {
         setProducts(result ? result : []);
         setIsLoading(false);
       }, timeout);
-      console.log(result);
     };
 
     filterProducts();

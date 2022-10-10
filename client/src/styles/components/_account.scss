@@ -1,0 +1,237 @@
+.account-page {
+  .account-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0 50px;
+    align-self: flex-start;
+    padding: 10px 0;
+    margin-bottom: 50px;
+    z-index: 100;
+
+    @include breakpoint-max(md) {
+      top: 60px;
+    }
+
+    background-color: $black;
+
+    p {
+      font-size: 16px;
+      cursor: pointer;
+
+      @include breakpoint-max(sm) {
+        font-size: 12px;
+      }
+
+      &.active {
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .account-settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    .setting-box {
+      background-color: $black;
+      border-radius: 4px;
+      padding: 20px 30px;
+      margin: 50px 0;
+
+      .setting-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid $white;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+
+        h4,
+        p {
+          margin: 0;
+        }
+      }
+
+      .content {
+        &.card-content .content-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 30px;
+          justify-content: space-between;
+          position: relative;
+
+          p.animate-bottom {
+            display: inline-block;
+            margin-left: auto;
+            margin-bottom: 0;
+          }
+
+          .card-container {
+            background-color: $grey;
+            border-radius: 20px;
+            display: inline-block;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px 0;
+            width: calc(50% - 30px);
+            align-items: baseline;
+
+            p {
+              &:not(.sm) {
+                font-size: 12px;
+              }
+            }
+
+            @include breakpoint-max(sm) {
+              width: 100%;
+            }
+
+            .holder-date {
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+            }
+          }
+        }
+
+        p.sm {
+          font-size: 14px;
+          margin: 0 0 5px;
+        }
+
+        p {
+          margin-top: 0;
+        }
+
+        .edit-form {
+          form {
+            .error-message {
+              font-size: 14px;
+              font-weight: bold;
+              color: $fail;
+              text-align: center;
+              margin-bottom: 0;
+            }
+
+            input:not([type='radio']):not([type='checkbox']) {
+              margin: 0;
+              color: $black;
+              width: 100%;
+              border: 1px solid $white;
+              max-width: 100%;
+
+              &.error {
+                border: 1px solid $fail;
+              }
+            }
+
+            input:disabled {
+              background-color: $invGray;
+              cursor: not-allowed;
+            }
+
+            label {
+              margin: 10px 0;
+              display: block;
+              font-size: 14px;
+            }
+
+            .password {
+              position: relative;
+
+              span {
+                position: absolute;
+                top: 46px;
+                z-index: 1;
+                right: 20px;
+                color: $black;
+                cursor: pointer;
+              }
+
+              .valid {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                display: none;
+
+                &.active {
+                  display: flex;
+                }
+
+                p {
+                  display: inline-block;
+                  font-size: 12px;
+
+                  @include breakpoint-max(sm) {
+                    font-size: 10px;
+                  }
+                }
+
+                .check,
+                .fail {
+                  position: unset;
+                  font-size: 12px;
+                  padding-left: 5px;
+                  display: none;
+                  cursor: initial;
+
+                  @include breakpoint-max(sm) {
+                    font-size: 10px;
+                  }
+
+                  path {
+                    fill: $success;
+                  }
+                }
+
+                .fail {
+                  display: inline-block;
+
+                  path {
+                    fill: $fail;
+                  }
+                }
+              }
+            }
+          }
+
+          button {
+            display: block;
+            width: 100%;
+            margin: 20px 0;
+            background-color: transparent;
+            color: $white;
+            border: 1px solid $white;
+            border-radius: 0;
+
+            svg {
+              position: initial;
+              font-size: 13px;
+              margin-left: 5px;
+            }
+
+            &.sign-in-button {
+              margin-top: 30px;
+            }
+
+            &:hover {
+              background-color: $white;
+              color: $black;
+
+              svg {
+                color: $black;
+
+                path {
+                  fill: $black;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
