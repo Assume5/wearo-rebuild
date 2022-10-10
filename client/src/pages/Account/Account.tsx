@@ -5,10 +5,11 @@ import { AccountNav } from '../../components/Account/AccountNav';
 import { Orders } from '../../components/Account/Orders';
 import { Settings } from '../../components/Account/Settings';
 import { Page } from '../../components/Page/Page';
+import { SkeletonLoading } from '../../components/Skeleton/SkeletonLoading';
 import { UserContext } from '../../contexts/UserContext';
 import { useCheckLogin } from '../../hooks/useCheckLogin';
 import { IAccount } from '../../types/account';
-import { serverUrl } from '../../utils/constants';
+import { serverUrl, timeout } from '../../utils/constants';
 import { generateGuestCookie } from '../../utils/function';
 
 export const Account = () => {
@@ -60,14 +61,24 @@ export const Account = () => {
         if (response.accessToken) {
           Cookies.set('access_token', response.accessToken, { expires: 7, secure: true });
         }
-        setData(response.data);
+        setTimeout(() => {
+          setData(response.data);
+        }, timeout);
       }
     };
 
     fetchData();
   }, []);
 
-  if (!data) return;
+  if (!data)
+    return (
+      <Page rootClass="account-page">
+        <div className="account-settings-container">
+          <SkeletonLoading rootClassName="account-nav" height={80} inline />
+          <SkeletonLoading height={400} count={4} style={{ marginBottom: 50 }} />
+        </div>
+      </Page>
+    );
 
   return (
     <Page rootClass="account-page">

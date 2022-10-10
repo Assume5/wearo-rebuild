@@ -132,7 +132,7 @@ export const getAccountDetails = async (req: UserAuthInfo, res: Response) => {
     const { id } = req.user;
     const data = await getAccountDetailsDB(id);
     const tempPayment = data.payment;
-    tempPayment.forEach((key, i) => {
+    tempPayment.forEach((_, i) => {
       tempPayment[i].card_number = tempPayment[i].card_number.slice(-4);
     });
     data.payment = tempPayment;
