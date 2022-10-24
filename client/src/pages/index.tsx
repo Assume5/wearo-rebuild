@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/Header/Header';
 import { ScrollToTop } from '../components/ScrollToTop/ScrollToTop';
 import { Account } from './Account/Account';
+import { Cart } from './Cart/Cart';
 import { Home } from './Home/Home';
 import { Product } from './Product/Product';
 import { ProductsPage } from './Products/Products';
@@ -20,6 +21,7 @@ export const Page = () => {
         <Route path="/products/:department/:category" element={<ProductsPage />} />
         <Route path="/product/:productID" element={<Product />} />
         <Route path="account" element={<Account />} />
+        <Route path="cart" element={<Cart />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -1,0 +1,185 @@
+.cart-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px 0;
+  width: 100%;
+  align-items: flex-start;
+
+  @include breakpoint-max(lg) {
+    flex-direction: column;
+  }
+
+  .cart-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px 0;
+    width: 65%;
+
+    @include breakpoint-max(lg) {
+      width: 100%;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 0 30px;
+      position: relative;
+
+      .product-image {
+        min-width: 60%;
+        max-width: 60%;
+        cursor: pointer;
+
+        @include breakpoint-max(lg) {
+          min-width: 50%;
+          max-width: 50%;
+        }
+      }
+
+      h4 {
+        cursor: pointer;
+        text-decoration: underline;
+        margin-right: 20px;
+      }
+
+      .trash-can {
+        position: absolute;
+        right: 0;
+        top: 5px;
+        cursor: pointer;
+
+        @include breakpoint-max(sm) {
+          bottom: 0;
+        }
+      }
+
+      .quantity {
+        display: flex;
+        gap: 0 20px;
+        align-items: center;
+
+        @include breakpoint-max(sm) {
+          flex-wrap: wrap;
+          gap: 20px 0;
+        }
+
+        p {
+          margin: 0;
+        }
+
+        .quantity-box {
+          display: flex;
+          gap: 0 10px;
+
+          select {
+            width: 150px;
+            color: $black;
+            height: 40px;
+
+            option {
+              color: $black;
+              text-align: center;
+            }
+          }
+        }
+      }
+
+      h4 {
+        margin-top: 0;
+      }
+
+      h4,
+      p {
+        @include breakpoint-between(lg, xl) {
+          max-width: 200px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .cart-items-total {
+    width: 30%;
+    position: sticky;
+    top: 152px;
+    background-color: $white;
+    border-radius: 4px;
+    padding: 30px 15px;
+
+    @include breakpoint-max(lg) {
+      width: 100%;
+    }
+
+    .login-note {
+      margin-bottom: 30px;
+
+      p {
+        justify-content: center;
+      }
+    }
+
+    p {
+      display: flex;
+      justify-content: space-between;
+      margin: 0;
+      color: $black;
+
+      strong {
+        color: $black;
+      }
+
+      &.total {
+        border-top: 1px solid $black;
+        border-bottom: 1px solid $black;
+        padding: 10px 0;
+        margin: 15px 0;
+      }
+    }
+
+    .discount {
+      flex-wrap: wrap;
+      color: $black;
+      display: flex;
+      justify-content: space-between;
+
+      strong {
+        cursor: pointer;
+        text-decoration: underline;
+        color: $black;
+      }
+
+      .apply-discount {
+        width: 100%;
+
+        input {
+          width: 100%;
+          border: 1px solid $black;
+          color: $black;
+          margin: 10px 0;
+        }
+
+        button {
+          margin-bottom: 50px;
+        }
+      }
+    }
+
+    button {
+      width: 100%;
+      display: block;
+      margin-top: 20px;
+      border-radius: 0;
+    }
+  }
+
+  .empty-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+  }
+}

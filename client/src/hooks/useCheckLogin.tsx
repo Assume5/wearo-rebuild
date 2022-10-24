@@ -16,9 +16,13 @@ export const useCheckLogin = () => {
       if (!accessToken || !refreshToken) {
         Cookies.remove('access_token');
         Cookies.remove('refresh_token');
-        userCtx.setUser({ isLogin: false, checked: true });
-        if (guestCookie) return;
-        generateGuestCookie();
+        if (guestCookie) {
+          userCtx.setUser({ isLogin: false, checked: true });
+          return;
+        } else {
+          await generateGuestCookie();
+          userCtx.setUser({ isLogin: false, checked: true });
+        }
       } else {
         const res = await fetch(`${serverUrl}/account/check/token`, {
           method: 'POST',
@@ -34,8 +38,8 @@ export const useCheckLogin = () => {
         if (!response.success) {
           Cookies.remove('access_token');
           Cookies.remove('refresh_token');
+          await generateGuestCookie();
           userCtx.setUser({ isLogin: false, checked: true });
-          generateGuestCookie();
         } else {
           if (response.accessToken) {
             Cookies.set('access_token', response.accessToken, { expires: 7, secure: true });

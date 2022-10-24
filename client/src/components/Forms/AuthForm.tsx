@@ -13,17 +13,6 @@ interface Props {
 export const AuthForm = ({ show, setShowModal }: Props) => {
   const [authState, setAuthState] = useState('login');
 
-  // useEffect(() => {
-  //   if (!show) return;
-  //   const container = document.querySelector('.auth-modal');
-  //   if (!container) return;
-  //   container.classList.remove('show');
-
-  //   setTimeout(() => {
-  //     container.classList.add('show');
-  //   }, 300);
-  // }, [authState]);
-
   const changeAuthState = (state: string) => {
     if (!show) return;
     const container = document.querySelector('.auth-modal');

@@ -11,11 +11,11 @@ interface Props {
 export const AccountNav = ({ currentPage, setCurrentPage }: Props) => {
   const userCtx = useContext(UserContext);
 
-  const onSignOutClick = () => {
+  const onSignOutClick = async () => {
     Cookies.remove('access_token');
     Cookies.remove('refresh_token');
+    await generateGuestCookie();
     userCtx.setUser({ isLogin: false, checked: true });
-    generateGuestCookie();
   };
 
   return (

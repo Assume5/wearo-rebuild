@@ -12,6 +12,16 @@
     flex-direction: column;
   }
 
+  .error-message {
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: -10px;
+
+    @include breakpoint-max(sm) {
+      text-align: center;
+    }
+  }
+
   h1 {
     margin: 0 0 30px;
     line-height: 1;

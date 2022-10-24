@@ -34,6 +34,7 @@ export const registerAccountDB = async (
 export const registerGuest = async (cookie: string) => {
   return await prisma.guest.create({
     data: {
+      id: cookie,
       cookie_value: cookie,
     },
   });

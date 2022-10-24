@@ -3,21 +3,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { CartContext } from '../../contexts/CartContext';
 import { UserContext } from '../../contexts/UserContext';
 import { useCheckLogin } from '../../hooks/useCheckLogin';
 import { IHeader } from '../../types';
 import { serverUrl, timeout } from '../../utils/constants';
 import { generateGuestCookie } from '../../utils/function';
 import { AuthForm } from '../Forms/AuthForm';
+import { LazyLoad } from '../LazyLoad/LazyLoad';
 import { SkeletonLoading } from '../Skeleton/SkeletonLoading';
+import { HeaderCartItems } from './HeaderCartItems';
 import { HeaderLinks } from './HeaderLinks';
 import { MobileHeader } from './MobileHeader';
+
 export const Header = () => {
   useCheckLogin();
   const [data, setData] = useState<IHeader[]>();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const userCtx = useContext(UserContext);
+  const cartCtx = useContext(CartContext);
 
   useEffect(() => {
     const fetchHeader = async () => {
@@ -41,6 +46,11 @@ export const Header = () => {
     fetchHeader();
   }, []);
 
+  useEffect(() => {
+    if (!userCtx.user.checked) return;
+    console.log(cartCtx);
+  }, [cartCtx, userCtx]);
+
   const onUserClick = () => {
     if (userCtx.user.isLogin) {
       navigate('/account');
@@ -49,11 +59,11 @@ export const Header = () => {
     }
   };
 
-  const onSignOutClick = () => {
+  const onSignOutClick = async () => {
     Cookies.remove('access_token');
     Cookies.remove('refresh_token');
+    await generateGuestCookie();
     userCtx.setUser({ isLogin: false, checked: true });
-    generateGuestCookie();
   };
 
   return (
@@ -89,9 +99,21 @@ export const Header = () => {
         <div className="favorites">
           <FontAwesomeIcon icon={faHeart} />
         </div>
-        <div className="cart has-item">
-          <FontAwesomeIcon icon={faShoppingCart} />
-          <div className="dot"></div>
+        <div className={`cart ${cartCtx.cart && cartCtx.cart.length ? 'has-item' : ''}`}>
+          {cartCtx.cart ? (
+            <>
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                onClick={() => {
+                  navigate('/cart');
+                }}
+              />
+              <div className="dot"></div>
+              {cartCtx.cart && cartCtx.cart.length ? <HeaderCartItems cart={cartCtx.cart} /> : <></>}
+            </>
+          ) : (
+            <SkeletonLoading width={30} height={20} style={{ margin: '0 8px 0 32px' }} />
+          )}
         </div>
       </div>
       <HeaderLinks data={data} className="desktop" />

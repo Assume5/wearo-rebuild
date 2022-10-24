@@ -19,6 +19,7 @@ import {
   generateRefreshToken,
 } from "../../utils/function";
 import { UserAuthInfo } from "../../types/interface";
+import { mergeGuestCartToCustomer } from "../../models/cart.model";
 
 const saltRounds = 15;
 const salt = bcrypt.genSaltSync(saltRounds);
@@ -66,6 +67,7 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json("Invalid username or password");
     }
 
+    await mergeGuestCartToCustomer(guestCookie, account.id);
     guestCookie && (await removeGuestByCookie(guestCookie));
 
     const user: User = account;

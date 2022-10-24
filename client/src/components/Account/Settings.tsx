@@ -45,8 +45,8 @@ export const Settings = ({ data, setData }: Props) => {
     if (!response.success) {
       Cookies.remove('access_token');
       Cookies.remove('refresh_token');
+      await generateGuestCookie();
       userCtx.setUser({ isLogin: false, checked: true });
-      generateGuestCookie();
     } else {
       if (response.accessToken) {
         Cookies.set('access_token', response.accessToken, { expires: 7, secure: true });
