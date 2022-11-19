@@ -14,6 +14,8 @@
 
 ##### AWS S3 Bucket
 
+##### TypeScript, Concurrently, and TS Node package
+
 ##### `.env` file for both server and client
 
 ## Installation
@@ -25,6 +27,10 @@
 ##### Redis: Download in [Redis Official Site](https://redis.io/download/)
 
 ##### TypeScript: `npm install -g typescript`
+
+##### TS Node: `npm install -g ts-node`
+
+##### Concurrently: `npm install -g concurrently`
 
 ### Using the App Locally
 

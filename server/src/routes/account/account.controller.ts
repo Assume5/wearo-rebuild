@@ -6,6 +6,7 @@ import {
   deletePaymentDB,
   editCreditCardDB,
   getAccountDetailsDB,
+  getFavoriteProductDB,
   registerAccountDB,
   registerGuest,
   removeGuestByCookie,
@@ -290,6 +291,28 @@ export const deletePayment = async (req: UserAuthInfo, res: Response) => {
     });
   } catch (error) {
     console.log("ERROR ON DELETING PAYMENT: ", error);
+    return res.status(500).json(error);
+  }
+};
+
+export const getFavoriteProduct = async (req: UserAuthInfo, res: Response) => {
+  if (req.tokenExpired) {
+    return res.status(200).json({
+      success: false,
+      error: "Token Expired / No Token",
+    });
+  }
+
+  try {
+    const { id } = req.user;
+    const data = await getFavoriteProductDB(id);
+    return res.status(200).json({
+      success: true,
+      accessToken: req.accessToken || null,
+      data: data,
+    });
+  } catch (error) {
+    console.log(`ERROR ON GET USER FAVORITES: `, error);
     return res.status(500).json(error);
   }
 };

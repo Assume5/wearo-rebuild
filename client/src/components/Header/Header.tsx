@@ -9,7 +9,7 @@ import { useCheckLogin } from '../../hooks/useCheckLogin';
 import { IHeader } from '../../types';
 import { serverUrl, timeout } from '../../utils/constants';
 import { generateGuestCookie } from '../../utils/function';
-import { AuthForm } from '../Forms/AuthForm';
+import { AuthForm } from '../AuthForms/AuthForm';
 import { LazyLoad } from '../LazyLoad/LazyLoad';
 import { SkeletonLoading } from '../Skeleton/SkeletonLoading';
 import { HeaderCartItems } from './HeaderCartItems';
@@ -46,10 +46,13 @@ export const Header = () => {
     fetchHeader();
   }, []);
 
-  useEffect(() => {
-    if (!userCtx.user.checked) return;
-    console.log(cartCtx);
-  }, [cartCtx, userCtx]);
+  const onFavoritesClick = () => {
+    if (userCtx.user.isLogin) {
+      navigate('/favorites');
+    } else {
+      setShowModal(true);
+    }
+  };
 
   const onUserClick = () => {
     if (userCtx.user.isLogin) {
@@ -96,7 +99,7 @@ export const Header = () => {
             <SkeletonLoading width={100} />
           )}
         </div>
-        <div className="favorites">
+        <div className="favorites" onClick={() => onFavoritesClick()}>
           <FontAwesomeIcon icon={faHeart} />
         </div>
         <div className={`cart ${cartCtx.cart && cartCtx.cart.length ? 'has-item' : ''}`}>

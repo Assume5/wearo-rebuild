@@ -14,7 +14,7 @@ export const HeaderLinks: React.FC<Props> = ({ data, className }) => {
 
   if (!data) {
     return (
-      <div className="links">
+      <div className="links header-link-loading">
         <SkeletonLoading count={5} inline={true} />
       </div>
     );

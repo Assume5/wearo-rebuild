@@ -12,9 +12,11 @@ import { LazyLoad } from '../LazyLoad/LazyLoad';
 interface Props {
   cart: ICart[];
   setCart: React.Dispatch<React.SetStateAction<ICart[] | null>>;
+  showTrashBtn?: boolean;
+  showQuantitySelect?: boolean;
 }
 
-export const CartItems = ({ cart, setCart }: Props) => {
+export const CartItems = ({ cart, setCart, showTrashBtn = true, showQuantitySelect = true }: Props) => {
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
 
@@ -138,19 +140,25 @@ export const CartItems = ({ cart, setCart }: Props) => {
               <div className="quantity">
                 <p>Quantity: </p>
                 <div className="quantity-box">
-                  <select defaultValue={item.quanitity} onChange={(e) => onQuantityChange(item.id, e.target.value)}>
-                    {Array.from(Array(20).keys()).map((i) => {
-                      return (
-                        <option key={i} value={i + 1}>
-                          {i + 1}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  {showQuantitySelect ? (
+                    <select defaultValue={item.quanitity} onChange={(e) => onQuantityChange(item.id, e.target.value)}>
+                      {Array.from(Array(20).keys()).map((i) => {
+                        return (
+                          <option key={i} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  ) : (
+                    item.quanitity
+                  )}
                 </div>
               </div>
             </div>
-            <FontAwesomeIcon icon={faTrash} className="trash-can" onClick={() => onItemDelete(item.id)} />
+            {showTrashBtn && (
+              <FontAwesomeIcon icon={faTrash} className="trash-can" onClick={() => onItemDelete(item.id)} />
+            )}
           </div>
         );
       })}

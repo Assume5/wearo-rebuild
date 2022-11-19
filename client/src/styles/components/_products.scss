@@ -1,4 +1,10 @@
 .product {
+  &.favorites-loading {
+    .product-filter {
+      display: none;
+    }
+  }
+
   .h1 {
     text-transform: capitalize;
     padding-bottom: 10px;
@@ -10,6 +16,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    
 
     @include breakpoint-max(lg) {
       gap: 0 15px;
@@ -78,6 +85,26 @@
         .back-img {
           opacity: 0;
           visibility: hidden;
+        }
+
+        .heart-container {
+          .favorite-fill {
+            path {
+              fill: #a83f39;
+            }
+          }
+
+          &.favorite {
+            .favorite-not {
+              opacity: 0;
+            }
+          }
+
+          &.not-favorite {
+            .favorite-fill {
+              opacity: 0;
+            }
+          }
         }
 
         .not-favorite {

@@ -4,10 +4,14 @@ import { SkeletonLoading } from '../../components/Skeleton/SkeletonLoading';
 import { ProductContainerLoading } from './ProductContainerLoading';
 import { ProductFilterLoading } from './ProductFilterLoading';
 
-export const ProductsLoadingPage = () => {
+interface Props {
+  isFavorites?: boolean;
+}
+
+export const ProductsLoadingPage = ({ isFavorites }: Props) => {
   return (
     <>
-      <Page rootClass="product">
+      <Page rootClass={`product ${isFavorites && 'favorites-loading'}`}>
         <>
           <ProductFilterLoading />
           <ProductContainerLoading />

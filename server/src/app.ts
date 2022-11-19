@@ -9,7 +9,7 @@ require("dotenv").config();
 const app = express();
 //middleware
 
-app.use(
+app.use( 
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,

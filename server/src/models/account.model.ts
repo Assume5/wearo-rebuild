@@ -216,3 +216,48 @@ export const deletePaymentDB = async (id: string, paymentId: number) => {
     },
   });
 };
+
+export const getFavoriteProductDB = async (id: string) => {
+  const favorites = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      favorites: {
+        select: {
+          product_id: true,
+        },
+      },
+    },
+  });
+
+  const updatedFavoritesKey = favorites.favorites.map(({ product_id }) => ({
+    id: product_id,
+  }));
+
+  return prisma.product.findMany({
+    where: {
+      OR: updatedFavoritesKey,
+    },
+    select: {
+      brand: true,
+      category: true,
+      checkout_count: true,
+      color: true,
+      description: true,
+      gender: true,
+      id: true,
+      img1: true,
+      img2: true,
+      img3: true,
+      img4: true,
+      material: true,
+      color_hex: true,
+      related_product_id: true,
+      name: true,
+      price: true,
+      type: true,
+      product_size: true,
+    },
+  });
+};

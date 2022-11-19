@@ -18,6 +18,12 @@
     padding: $padding2 $padding3;
   }
 
+  .links.header-link-loading {
+    @include breakpoint-max(md) {
+      display: none;
+    }
+  }
+
   &-left {
     display: flex;
     align-items: center;
@@ -461,5 +467,20 @@
     margin: 6px 0;
     transition: 0.4s;
     display: block;
+  }
+
+  .links.header-link-loading {
+    @include breakpoint-max(md) {
+      display: block;
+
+      .skeleton {
+        flex-direction: column;
+
+        .react-loading-skeleton {
+          height: 50px;
+          margin-bottom: 30px;
+        }
+      }
+    }
   }
 }

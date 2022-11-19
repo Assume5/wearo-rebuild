@@ -1,4 +1,5 @@
-.cart-page {
+.cart-page,
+.checkout-page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -8,6 +9,7 @@
 
   @include breakpoint-max(lg) {
     flex-direction: column;
+    justify-content: flex-start;
   }
 
   .cart-items-container {
@@ -143,6 +145,15 @@
       color: $black;
       display: flex;
       justify-content: space-between;
+
+      .error-message {
+        font-size: 14px;
+        font-weight: bold;
+        color: $fail;
+        display: block;
+        text-align: center;
+        margin-bottom: 0;
+      }
 
       strong {
         cursor: pointer;

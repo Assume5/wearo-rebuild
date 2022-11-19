@@ -5,8 +5,9 @@
     gap: 0 50px;
     align-self: flex-start;
     padding: 10px 0;
-    margin-bottom: 50px;
+    margin: 0 auto 50px;
     z-index: 100;
+    max-width: 800px;
 
     @include breakpoint-max(md) {
       top: 60px;

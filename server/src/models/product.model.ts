@@ -200,3 +200,59 @@ export const getProductByIdDB = async (id: string) => {
     },
   });
 };
+
+export const favoriteAProduct = async (productID: string, userID: string) => {
+  await prisma.user.update({
+    where: {
+      id: userID,
+    },
+    data: {
+      favorites: {
+        create: {
+          product_id: productID,
+        },
+      },
+    },
+  });
+
+  return await prisma.product.findUnique({
+    where: {
+      id: productID,
+    },
+    select: {
+      brand: true,
+      category: true,
+      checkout_count: true,
+      color: true,
+      description: true,
+      gender: true,
+      id: true,
+      img1: true,
+      img2: true,
+      img3: true,
+      img4: true,
+      material: true,
+      color_hex: true,
+      related_product_id: true,
+      name: true,
+      price: true,
+      type: true,
+      product_size: true,
+    },
+  });
+};
+
+export const unfavoriteAProduct = async (productID: string, userID: string) => {
+  return await prisma.user.update({
+    where: {
+      id: userID,
+    },
+    data: {
+      favorites: {
+        deleteMany: {
+          product_id: productID,
+        },
+      },
+    },
+  });
+};

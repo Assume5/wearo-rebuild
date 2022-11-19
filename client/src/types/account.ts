@@ -1,3 +1,5 @@
+import { IProduct } from './product';
+
 export type IPayment = {
   id: string;
   city: string;
@@ -32,4 +34,8 @@ export type IAccount = {
   zip: string;
   orders: IOrders[];
   payment: IPayment[];
+};
+
+export type IFavorites = {
+  product: IProduct;
 };

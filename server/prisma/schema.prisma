@@ -97,7 +97,6 @@ model favorites {
     user_id String
     user user @relation(fields: [user_id], references: [id])
     product_id String
-    product product @relation(fields: [product_id], references: [id])
 }
 
 model cart {
@@ -146,7 +145,6 @@ model product {
     checkout_count Int @default(0)
     create_at DateTime @default(now())
     order_details order_details[]
-    favorites favorites[]
     product_size product_size[]
     category category @relation(fields: [category_id], references: [id])
 }

@@ -38,7 +38,6 @@ export const CartContextProvider: React.FC<Props> = ({ children }) => {
 
       if (!userCtx.user.isLogin) {
         const guestId = Cookies.get('guest_cookie');
-        console.log(guestId);
         if (!guestId) return;
         url = `${serverUrl}/cart/guest/${guestId}`;
       } else {
@@ -47,7 +46,6 @@ export const CartContextProvider: React.FC<Props> = ({ children }) => {
       }
       const res = await fetch(url, option);
       const response = await res.json();
-      console.log(response);
 
       if (!res.ok) {
         console.error(response);

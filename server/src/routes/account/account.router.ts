@@ -8,12 +8,15 @@ import {
   editPayment,
   editPersonal,
   getAccountDetails,
+  getFavoriteProduct,
   login,
   loginGuest,
   registerAccount,
 } from "./account.controller";
 
 const accountRouter = Router();
+
+accountRouter.get("/favorites", authenticateToken, getFavoriteProduct);
 
 accountRouter.post("/register", registerAccount);
 

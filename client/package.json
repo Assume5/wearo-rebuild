@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "build-css": "node-sass --output-style compressed  src/styles/ -o src/dist/",
     "watch-css": "node-sass -w --output-style compressed  src/styles/ -o src/dist/",
-    "dev": "npm run build-css && npm run watch-css & npm start"
+    "dev": "concurrently npm:build-css npm:watch-css npm:start"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
