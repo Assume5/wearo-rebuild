@@ -35,7 +35,6 @@ export const Settings = ({ data, setData }: Props) => {
 
     const response = await res.json();
 
-    console.log(response);
 
     if (!res.ok && res.status === 500) {
       console.error(`Error on Deleting Payment: ${response}`);

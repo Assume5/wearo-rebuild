@@ -28,7 +28,7 @@ export const Products: React.FC<Props> = ({ products }) => {
       return;
     }
 
-    const exists = favoritesCtx.favorites.find((favorite) => favorite.id === id);
+    const exists = favoritesCtx.favorites!.find((favorite) => favorite.id === id);
     let add = false;
     if (!exists) {
       add = true;
@@ -45,11 +45,9 @@ export const Products: React.FC<Props> = ({ products }) => {
 
       const result = await res.json();
 
-      console.log(result);
-
       if (result.accessToken) Cookies.set('access_token', result.accessToken, { expires: 7, secure: true });
 
-      const temp = [...favoritesCtx.favorites];
+      const temp = [...favoritesCtx.favorites!];
       if (add) {
         favoritesCtx.setFavorites([...temp, result.data]);
       } else {
@@ -59,6 +57,7 @@ export const Products: React.FC<Props> = ({ products }) => {
       console.error('Error on favoring: ', error);
     }
   };
+
   return (
     <div className="products-container">
       {products.map((item) => {
@@ -71,7 +70,7 @@ export const Products: React.FC<Props> = ({ products }) => {
               </div>
               <div
                 className={`heart-container ${
-                  favoritesCtx.favorites.find((favorite) => favorite.id === item.id) ? 'favorite' : 'not-favorite'
+                  favoritesCtx.favorites!.find((favorite) => favorite.id === item.id) ? 'favorite' : 'not-favorite'
                 }`}
                 onClick={(e) => onFavoriteClicks(e, item.id)}
               >

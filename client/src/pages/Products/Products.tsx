@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Page } from '../../components/Page/Page';
 import { Products } from '../../components/Products/Products';
 import { SkeletonLoading } from '../../components/Skeleton/SkeletonLoading';
 import { Sort } from '../../components/Sort/Sort';
+import { FavoritesContext } from '../../contexts/FavoritesContext';
 import { IProduct, IFilter, ISearchParams, IParams, IParamsSize, IParamsType } from '../../types/product';
 import { serverUrl, timeout } from '../../utils/constants';
 import { setParams, trimDash } from '../../utils/function';
+import { Favorites } from '../Favorites/Favorites';
 import { ProductContainerLoading } from './ProductContainerLoading';
 import { ProductsLoadingPage } from './ProductsLoadingPage';
 
@@ -21,6 +23,7 @@ export const ProductsPage = () => {
   const [searchParams, setSearchParams] = useState<IParams[]>([]);
   const [filterOnce, setFilterOnce] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const favoritesCtx = useContext(FavoritesContext);
 
   useEffect(() => {
     const filterProducts = async () => {
@@ -109,7 +112,7 @@ export const ProductsPage = () => {
     fetchProducts();
   }, [department, category]);
 
-  if (!department || !category || !filter) return <ProductsLoadingPage />;
+  if (!department || !category || !filter || !favoritesCtx || !favoritesCtx.favorites) return <ProductsLoadingPage />;
 
   return (
     <Page rootClass="product">
