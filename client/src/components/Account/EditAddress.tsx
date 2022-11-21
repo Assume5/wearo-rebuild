@@ -49,7 +49,6 @@ export const EditAddress = ({ data, setData, setEditAddress }: Props) => {
 
     if (zipcode.value.length !== 5) {
       zipInput?.classList.add('error');
-
       pass = false;
     }
 

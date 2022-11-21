@@ -32,7 +32,6 @@ export type IAccount = {
   city: string;
   state: string;
   zip: string;
-  orders: IOrders[];
   payment: IPayment[];
 };
 

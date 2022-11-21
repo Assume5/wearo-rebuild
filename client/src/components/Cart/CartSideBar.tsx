@@ -86,8 +86,8 @@ export const CartSideBar = ({ cart, setCart, showCheckoutBtn = true }: Props) =>
         Total{' '}
         <strong>
           {promoCtx.promo.apply
-            ? +total * (1 - promoCtx.promo.discount) + (freeShipping ? 0 : 15)
-            : +total + (freeShipping ? 0 : 15)}
+            ? +(total * (1 - promoCtx.promo.discount) + (freeShipping ? 0 : 15)).toFixed(2)
+            : (+total + (freeShipping ? 0 : 15)).toFixed(2)}
         </strong>
       </p>
       <div className="discount">

@@ -65,14 +65,6 @@ export const getAccountDetailsDB = async (id: string) => {
       city: true,
       state: true,
       zip: true,
-      orders: {
-        select: {
-          id: true,
-          order_date: true,
-          order_status: true,
-          total_pirce: true,
-        },
-      },
       payment: {
         select: {
           id: true,

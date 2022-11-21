@@ -8,6 +8,7 @@ import { Cart } from './Cart/Cart';
 import { Checkout } from './Checkout/Checkout';
 import { Favorites } from './Favorites/Favorites';
 import { Home } from './Home/Home';
+import { Order } from './Order/Order';
 import { Product } from './Product/Product';
 import { ProductsPage } from './Products/Products';
 import { ProductsOverview } from './ProductsOverview/ProductsOverview';
@@ -26,6 +27,7 @@ export const Page = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/order/:id" element={<Order />} />
       </Routes>
       <Footer />
     </BrowserRouter>

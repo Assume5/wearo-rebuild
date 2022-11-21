@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
-import { promoCheckDB } from "../../models/checkout.model";
+import { createCheckout, promoCheckDB } from "../../models/checkout.model";
+import { ICheckout } from "../../types/checkout";
 
 export const promoCodeCheck: RequestHandler = async (req, res) => {
-  console.log(1);
   const { value } = req.body;
   try {
     const valid = await promoCheckDB(value);
@@ -15,6 +15,40 @@ export const promoCodeCheck: RequestHandler = async (req, res) => {
     });
   } catch (error) {
     console.log(`Error On Promo Code Check: `, error);
+    return res.status(500).json(error);
+  }
+};
+
+export const checkout: RequestHandler = async (req, res) => {
+  const body: ICheckout = req.body;
+
+  try {
+    const order = await createCheckout(
+      body.email,
+      body.cardFirst,
+      body.cardLast,
+      body.phone,
+      body.card,
+      body.shippingFirst,
+      body.shippingLast,
+      body.shippingAdd1,
+      body.shippingAdd2,
+      body.shippingCity,
+      body.shippingZip,
+      body.shippingState,
+      body.billingFirst,
+      body.billingLast,
+      body.billingAdd1,
+      body.billingAdd2,
+      body.billingCity,
+      body.billingState,
+      body.billingZip,
+      body.total,
+      body.productDetails
+    );
+    return res.status(200).json({ orderID: order.id });
+  } catch (error) {
+    console.log(`Error On Creating Checkout: `, error);
     return res.status(500).json(error);
   }
 };

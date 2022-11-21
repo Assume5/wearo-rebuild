@@ -10,13 +10,142 @@
     @include breakpoint-max(lg) {
       width: 100%;
     }
+
+    .check-out-form {
+      background-color: $black;
+      padding: 20px 30px;
+      margin-bottom: 30px;
+
+      @include breakpoint-max(sm) {
+        padding: 20px 15px;
+      }
+
+      p {
+        margin: 5px 0;
+      }
+    }
+
+    .checkout-form-header {
+      margin-bottom: 20px;
+
+      h4 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid $white;
+        padding-bottom: 5px;
+
+        .clickable {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .custom-checkbox {
+      margin-bottom: 15px;
+
+      label {
+        color: $white;
+        padding-left: 0px;
+      }
+
+      .checkmark {
+        border: 1px solid $white;
+
+        &::after {
+          border: solid $white;
+          border-width: 0 3px 3px 0;
+        }
+      }
+    }
+
+    .select-exist-payment {
+      margin-top: 20px !important;
+      text-transform: capitalize;
+      font-weight: bold;
+    }
+
+    .card-container {
+      background-color: $grey;
+      border-radius: 20px;
+      display: inline-block;
+      padding: 20px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px 0;
+      width: calc(50% - 30px);
+      align-items: baseline;
+      margin-top: 20px;
+      cursor: pointer;
+
+      p {
+        &:not(.sm) {
+          font-size: 12px;
+        }
+      }
+
+      @include breakpoint-max(sm) {
+        width: 100%;
+      }
+
+      .holder-date {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+
+    .overview {
+      p {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        margin: 20px 0;
+        background-color: transparent;
+        color: $white;
+        border: 1px solid $white;
+        border-radius: 0;
+
+        svg {
+          position: initial;
+          font-size: 13px;
+          margin-left: 5px;
+        }
+
+        &.sign-in-button {
+          margin-top: 30px;
+        }
+
+        &:hover {
+          background-color: $white;
+          color: $black;
+
+          svg {
+            color: $black;
+
+            path {
+              fill: $black;
+            }
+          }
+        }
+      }
+    }
   }
 
   .checkout-summary {
     width: 35%;
+    position: sticky;
+    top: 152px;
 
     @include breakpoint-max(lg) {
       width: 100%;
+      position: relative;
+      top: 0;
     }
 
     .total-item-in-order {

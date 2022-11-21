@@ -75,6 +75,9 @@ CREATE TABLE "user" (
     "state" TEXT,
     "zip" TEXT,
     "create_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "phone" TEXT,
+    "shipping_first_name" TEXT,
+    "shipping_last_name" TEXT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -173,7 +176,6 @@ CREATE TABLE "product_size" (
 -- CreateTable
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "card_holder_first_name" TEXT NOT NULL,
     "card_holder_last_name" TEXT NOT NULL,
@@ -196,7 +198,7 @@ CREATE TABLE "orders" (
     "order_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "tracking_number" TEXT,
     "order_status" TEXT,
-    "total_pirce" INTEGER NOT NULL,
+    "total_pirce" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
 );
@@ -207,7 +209,10 @@ CREATE TABLE "order_details" (
     "order_id" TEXT NOT NULL,
     "product_id" TEXT NOT NULL,
     "selected_size" TEXT NOT NULL,
-    "quantity" INTEGER NOT NULL,
+    "product_image" TEXT NOT NULL,
+    "product_name" TEXT NOT NULL,
+    "product_price" DOUBLE PRECISION NOT NULL,
+    "quanitity" INTEGER NOT NULL,
 
     CONSTRAINT "order_details_pkey" PRIMARY KEY ("id")
 );
@@ -234,9 +239,6 @@ ALTER TABLE "payment" ADD CONSTRAINT "payment_user_id_fkey" FOREIGN KEY ("user_i
 ALTER TABLE "favorites" ADD CONSTRAINT "favorites_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "favorites" ADD CONSTRAINT "favorites_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "cart" ADD CONSTRAINT "cart_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -249,10 +251,4 @@ ALTER TABLE "product" ADD CONSTRAINT "product_category_id_fkey" FOREIGN KEY ("ca
 ALTER TABLE "product_size" ADD CONSTRAINT "product_size_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "orders_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "order_details" ADD CONSTRAINT "order_details_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "order_details" ADD CONSTRAINT "order_details_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

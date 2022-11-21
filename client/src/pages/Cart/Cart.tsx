@@ -9,8 +9,6 @@ import { CartLoading } from './CartLoading';
 export const Cart = () => {
   const cartCtx = useContext(CartContext);
   const navigate = useNavigate();
-  console.log(cartCtx);
-
   if (!cartCtx.cart) return <CartLoading />;
 
   return (

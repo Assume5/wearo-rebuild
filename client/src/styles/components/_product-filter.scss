@@ -99,40 +99,6 @@
       .filter-item {
         margin: 5px 0;
         padding: 5px 0;
-
-        label {
-          color: $black;
-          padding: 0 15px;
-          text-transform: capitalize;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-          position: relative;
-
-          .checkmark {
-            width: 20px;
-            height: 20px;
-            margin-right: 20px;
-            border: 1px solid $black;
-            position: relative;
-          }
-
-          &.active {
-            .checkmark {
-              &::after {
-                content: '';
-                position: absolute;
-                left: 50%;
-                top: 40%;
-                width: 5px;
-                height: 10px;
-                border: solid $gray;
-                border-width: 0 3px 3px 0;
-                transform: translate(-50%, -50%) rotate(45deg);
-              }
-            }
-          }
-        }
       }
     }
 

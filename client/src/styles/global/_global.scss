@@ -171,3 +171,169 @@ input:not([type='radio']):not([type='checkbox']) {
     animation: spin 1s linear infinite;
   }
 }
+
+//form
+.edit-form,
+.address-form,
+.payment-form {
+  form {
+    .error-message {
+      font-size: 14px;
+      font-weight: bold;
+      color: $fail;
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    input:not([type='radio']):not([type='checkbox']) {
+      margin: 0;
+      color: $black;
+      width: 100%;
+      border: 1px solid $white;
+      max-width: 100%;
+
+      &.error {
+        border: 1px solid $fail;
+      }
+    }
+
+    input:disabled {
+      background-color: $invGray;
+      cursor: not-allowed;
+    }
+
+    label {
+      margin: 10px 0;
+      display: block;
+      font-size: 14px;
+    }
+
+    .password {
+      position: relative;
+
+      span {
+        position: absolute;
+        top: 46px;
+        z-index: 1;
+        right: 20px;
+        color: $black;
+        cursor: pointer;
+      }
+
+      .valid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        display: none;
+
+        &.active {
+          display: flex;
+        }
+
+        p {
+          display: inline-block;
+          font-size: 12px;
+
+          @include breakpoint-max(sm) {
+            font-size: 10px;
+          }
+        }
+
+        .check,
+        .fail {
+          position: unset;
+          font-size: 12px;
+          padding-left: 5px;
+          display: none;
+          cursor: initial;
+
+          @include breakpoint-max(sm) {
+            font-size: 10px;
+          }
+
+          path {
+            fill: $success;
+          }
+        }
+
+        .fail {
+          display: inline-block;
+
+          path {
+            fill: $fail;
+          }
+        }
+      }
+    }
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    background-color: transparent;
+    color: $white;
+    border: 1px solid $white;
+    border-radius: 0;
+
+    svg {
+      position: initial;
+      font-size: 13px;
+      margin-left: 5px;
+    }
+
+    &.sign-in-button {
+      margin-top: 30px;
+    }
+
+    &:hover {
+      background-color: $white;
+      color: $black;
+
+      svg {
+        color: $black;
+
+        path {
+          fill: $black;
+        }
+      }
+    }
+  }
+}
+
+//checkbox
+.custom-checkbox {
+  label {
+    color: $black;
+    padding: 0 15px;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      margin-right: 20px;
+      border: 1px solid $black;
+      position: relative;
+    }
+
+    &.active {
+      .checkmark {
+        &::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 40%;
+          width: 5px;
+          height: 10px;
+          border: solid $gray;
+          border-width: 0 3px 3px 0;
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+      }
+    }
+  }
+}

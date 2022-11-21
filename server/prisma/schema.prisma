@@ -8,191 +8,190 @@ datasource db {
 }
 
 model guest {
-    id String @id @default(uuid())
-    cookie_value String @unique
-    create_at DateTime @default(now())
-    guest_cart guest_cart[]
+  id           String       @id @default(uuid())
+  cookie_value String       @unique
+  create_at    DateTime     @default(now())
+  guest_cart   guest_cart[]
 }
 
 model coupons {
-    id String @id @default(uuid())
-    value String
-    status String
-    discount Int
+  id       String @id @default(uuid())
+  value    String
+  status   String
+  discount Int
 }
 
 model page_screen_hero {
-    id Int @id @default(autoincrement())
-    category_id Int
-    background_image String
-    text String?
-    category category @relation(fields: [category_id], references: [id])
+  id               Int      @id @default(autoincrement())
+  category_id      Int
+  background_image String
+  text             String?
+  category         category @relation(fields: [category_id], references: [id])
 }
 
 model home_screen_banner {
-    id Int @id @default(autoincrement())
-    text String
-    coupon_code String
+  id          Int    @id @default(autoincrement())
+  text        String
+  coupon_code String
 }
 
 model home_screen_promo {
-    id Int @id @default(autoincrement())
-    text String
-    product_id String
-    name String
-    price Float
-    image String
+  id         Int    @id @default(autoincrement())
+  text       String
+  product_id String
+  name       String
+  price      Float
+  image      String
 }
 
 model guest_cart {
-    id Int @id @default(autoincrement())
-    owner_id String
-    product_id String
-    product_image String
-    product_name String
-    product_price Float
-    selected_size String
-    quanitity Int
-    guest guest @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  id            Int    @id @default(autoincrement())
+  owner_id      String
+  product_id    String
+  product_image String
+  product_name  String
+  product_price Float
+  selected_size String
+  quanitity     Int
+  guest         guest  @relation(fields: [owner_id], references: [id], onDelete: Cascade)
 }
 
 model user {
-  id String @id @default(uuid())
-  email String @unique
-  password String
-  first_name String
-  last_name String
-  phone String?
+  id                  String      @id @default(uuid())
+  email               String      @unique
+  password            String
+  first_name          String
+  last_name           String
+  address1            String?
+  address2            String?
+  city                String?
+  state               String?
+  zip                 String?
+  create_at           DateTime    @default(now())
+  phone               String?
   shipping_first_name String?
-  shipping_last_name String?
-  address1 String?
-  address2 String?
-  city String?
-  state String?
-  zip String?
-  create_at DateTime @default(now())
-  orders orders[]
-  cart cart[]
-  favorites favorites[]
-  payment payment[]
+  shipping_last_name  String?
+  cart                cart[]
+  favorites           favorites[]
+  payment             payment[]
 }
 
 model payment {
-    id Int @id @default(autoincrement())
-    user_id String
-    card_first_name String
-    card_last_name String
-    card_number String
-    card_exp_date String
-    billing_address1 String
-    billing_address2 String?
-    city String
-    state String
-    zip String
-    user user @relation(fields: [user_id], references: [id])
+  id               Int     @id @default(autoincrement())
+  user_id          String
+  card_first_name  String
+  card_last_name   String
+  card_number      String
+  card_exp_date    String
+  billing_address1 String
+  billing_address2 String?
+  city             String
+  state            String
+  zip              String
+  user             user    @relation(fields: [user_id], references: [id])
 }
 
 model favorites {
-    id Int @id @default(autoincrement())
-    user_id String
-    user user @relation(fields: [user_id], references: [id])
-    product_id String
+  id         Int    @id @default(autoincrement())
+  user_id    String
+  product_id String
+  user       user   @relation(fields: [user_id], references: [id])
 }
 
 model cart {
-    id Int @id @default(autoincrement())
-    owner_id String
-    product_id String 
-    product_image String
-    product_name String
-    product_price Float
-    selected_size String
-    quanitity Int
-    user user @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  id            Int    @id @default(autoincrement())
+  owner_id      String
+  product_id    String
+  product_image String
+  product_name  String
+  product_price Float
+  selected_size String
+  quanitity     Int
+  user          user   @relation(fields: [owner_id], references: [id], onDelete: Cascade)
 }
 
 model parent_nav {
-    id Int @id @default(autoincrement())
-    text String @unique //on the nav new men women etc..
-    category category[]
+  id       Int        @id @default(autoincrement())
+  text     String     @unique
+  category category[]
 }
+
 model category {
-    id Int @id @default(autoincrement())
-    category String //footwear etc..
-    parent_nav_id Int
-    products product[]
-    page_screen page_screen_hero[]
-    product_nav parent_nav @relation(fields: [parent_nav_id], references: [id], onDelete: Cascade)
+  id            Int                @id @default(autoincrement())
+  category      String
+  parent_nav_id Int
+  product_nav   parent_nav         @relation(fields: [parent_nav_id], references: [id], onDelete: Cascade)
+  page_screen   page_screen_hero[]
+  products      product[]
 }
 
 model product {
-    id String @id @default(uuid())
-    name String
-    img1 String
-    img2 String?
-    img3 String?
-    img4 String?
-    color String
-    color_hex String?
-    related_product_id String?
-    material String?
-    description String?
-    price Float
-    category_id Int
-    brand String
-    type String
-    gender String
-    checkout_count Int @default(0)
-    create_at DateTime @default(now())
-    order_details order_details[]
-    product_size product_size[]
-    category category @relation(fields: [category_id], references: [id])
+  id                 String         @id @default(uuid())
+  name               String
+  img1               String
+  img2               String?
+  img3               String?
+  img4               String?
+  color              String
+  color_hex          String?
+  related_product_id String?
+  material           String?
+  description        String?
+  price              Float
+  category_id        Int
+  brand              String
+  type               String
+  gender             String
+  checkout_count     Int            @default(0)
+  create_at          DateTime       @default(now())
+  category           category       @relation(fields: [category_id], references: [id])
+  product_size       product_size[]
 }
 
 model product_size {
-    id Int @id @default(autoincrement())
-    product_id String
-    size String
-    stock Int
-    product product @relation(fields: [product_id], references: [id])
+  id         Int     @id @default(autoincrement())
+  product_id String
+  size       String
+  stock      Int
+  product    product @relation(fields: [product_id], references: [id])
 }
 
 model orders {
-    id String @id @default(uuid())
-    user_id String
-    user user @relation(fields: [user_id], references: [id])
-    email String
-    card_holder_first_name String
-    card_holder_last_name String
-    phone String
-    card_number String
-    shipping_first_name String
-    shipping_last_name String
-    shipping_address1 String
-    shipping_address2 String?
-    shipping_city String
-    shipping_zip String
-    shipping_state String
-    billing_first_name String
-    billing_last_name String
-    billing_address1 String
-    billing_address2 String?
-    billing_city String
-    billing_state String
-    billing_zip String
-    order_date DateTime @default(now())
-    tracking_number String?
-    order_status String?
-    total_pirce Int
-    order_details order_details[]
+  id                     String          @id @default(uuid())
+  email                  String
+  card_holder_first_name String
+  card_holder_last_name  String
+  phone                  String
+  card_number            String
+  shipping_first_name    String
+  shipping_last_name     String
+  shipping_address1      String
+  shipping_address2      String?
+  shipping_city          String
+  shipping_zip           String
+  shipping_state         String
+  billing_first_name     String
+  billing_last_name      String
+  billing_address1       String
+  billing_address2       String?
+  billing_city           String
+  billing_state          String
+  billing_zip            String
+  order_date             DateTime        @default(now())
+  tracking_number        String?
+  order_status           String?
+  total_pirce            Float
+  order_details          order_details[]
 }
 
 model order_details {
-    id Int @id @default(autoincrement())
-    order_id String
-    order orders @relation(fields: [order_id], references: [id])
-    product_id String
-    selected_size String
-    quantity Int
-    product product @relation(fields: [product_id], references: [id])
+  id            Int    @id @default(autoincrement())
+  order_id      String
+  product_id    String
+  selected_size String
+  product_image String
+  product_name  String
+  product_price Float
+  quanitity     Int
+  order         orders @relation(fields: [order_id], references: [id])
 }

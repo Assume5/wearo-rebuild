@@ -105,7 +105,6 @@ export const favoriteProduct = async (req: UserAuthInfo, res: Response) => {
   try {
     const { id } = req.user;
     const { add } = req.body;
-    console.log(req.params);
     const productId = req.params.id;
     if (add) {
       const data = await favoriteAProduct(productId, id);

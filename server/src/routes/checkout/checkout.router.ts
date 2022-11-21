@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { promoCodeCheck } from "./checkout.controller";
+import { checkout, promoCodeCheck } from "./checkout.controller";
 
 const checkoutRouter = Router();
 
-checkoutRouter.post("/");
+checkoutRouter.post("/", checkout);
 
 checkoutRouter.post("/promo-check", promoCodeCheck);
 
