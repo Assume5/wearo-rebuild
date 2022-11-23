@@ -21,8 +21,10 @@ export const FavoritesContextContextProvider: React.FC<Props> = ({ children }) =
 
   const [favorites, setFavorites] = useState<IProduct[] | null>(null);
   useEffect(() => {
-    if (!userCtx.user.checked) return;
-    if (!userCtx.user.isLogin) return;
+    if (!userCtx.user.checked || !userCtx.user.isLogin) {
+      setFavorites([]);
+      return;
+    }
 
     const fetchData = async () => {
       const res = await fetch(`${serverUrl}/account/favorites`, {

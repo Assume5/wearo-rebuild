@@ -46,6 +46,7 @@ export const checkout: RequestHandler = async (req, res) => {
       body.total,
       body.productDetails
     );
+    // Clear cart
     return res.status(200).json({ orderID: order.id });
   } catch (error) {
     console.log(`Error On Creating Checkout: `, error);
