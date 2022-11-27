@@ -927,6 +927,14 @@ const coupon: Prisma.couponsCreateInput = {
   discount: 20,
 };
 
+const admin: Prisma.adminCreateInput = {
+  name: "Wearo Admin",
+  password: "$2b$15$4nGiGHNG/nKXVL2cKClnjezy9YHozpvtTfmYC0000uz8fG5S3jNQa",
+  permission: "1",
+  role: "Store Owner",
+  username: "wearoadmin",
+};
+
 async function main() {
   console.log("Start seeding...");
   for (const n of navData) {
@@ -952,6 +960,12 @@ async function main() {
     data: coupon,
   });
   console.log(`Created Coupons`);
+
+  await prisma.admin.create({
+    data: admin,
+  });
+
+  console.log("Created Admin User");
 
   console.log(`Seeding finished.`);
 }

@@ -7,6 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model admin {
+  id String @id @default(uuid())  
+  username String
+  password String
+  name String
+  role String
+  permission String // 1 Owner 2 Administrator 3 Manager
+  created_at DateTime @default(now())
+}
+
 model guest {
   id           String       @id @default(uuid())
   cookie_value String       @unique

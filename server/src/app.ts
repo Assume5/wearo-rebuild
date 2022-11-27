@@ -9,7 +9,7 @@ require("dotenv").config();
 const app = express();
 //middleware
 
-app.use( 
+app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
@@ -17,7 +17,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.ALLOW_ORIGIN || "http://localhost:3000",
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })

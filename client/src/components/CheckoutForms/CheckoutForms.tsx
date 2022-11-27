@@ -69,7 +69,7 @@ export const CheckoutForms = ({ data }: Props) => {
       total += 15;
     }
 
-    setTotal(total);
+    setTotal(+total.toFixed(2));
   }, [promoCtx, cartCtx]);
 
   const onFinalSubmission = async () => {
@@ -112,7 +112,7 @@ export const CheckoutForms = ({ data }: Props) => {
       billingCity: billing?.city,
       billingState: billing?.state,
       billingZip: billing?.zip,
-      total: total,
+      total: total.toFixed(2),
       productDetails,
       role,
       guestId,
