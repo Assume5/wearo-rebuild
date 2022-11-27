@@ -31,6 +31,8 @@ export const createCheckout = async (
   billingState: string,
   billingZip: string,
   total: number,
+  apply_coupon: boolean,
+  discount: number,
   productDetails: IProductDetails[]
 ) => {
   return await prisma.orders.create({
@@ -55,6 +57,8 @@ export const createCheckout = async (
       total_pirce: total,
       billing_address2: billingAdd2,
       shipping_address2: shippingAdd2,
+      apply_coupon,
+      discount,
       order_status: "1",
       order_details: {
         createMany: {

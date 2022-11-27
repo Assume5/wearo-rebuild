@@ -11,7 +11,7 @@ import { LazyLoad } from '../LazyLoad/LazyLoad';
 
 interface Props {
   cart: ICart[];
-  setCart: React.Dispatch<React.SetStateAction<ICart[] | null>>;
+  setCart?: React.Dispatch<React.SetStateAction<ICart[] | null>>;
   showTrashBtn?: boolean;
   showQuantitySelect?: boolean;
 }
@@ -69,7 +69,7 @@ export const CartItems = ({ cart, setCart, showTrashBtn = true, showQuantitySele
         tempItem.quanitity = +quantity;
         temp[index] = tempItem;
         setTimeout(() => {
-          setCart([...temp]);
+          setCart!([...temp]);
           setLoading(false);
         }, timeout);
       }
@@ -118,7 +118,7 @@ export const CartItems = ({ cart, setCart, showTrashBtn = true, showQuantitySele
         const temp = [...cart];
         const result = temp.filter((item) => item.id !== id);
         setTimeout(() => {
-          setCart([...result]);
+          setCart!([...result]);
           setLoading(false);
         }, timeout);
       }

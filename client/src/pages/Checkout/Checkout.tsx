@@ -25,7 +25,6 @@ export const Checkout = () => {
     const fetchData = async () => {
       const accessToken = Cookies.get('access_token');
       const refreshToken = Cookies.get('refresh_token');
-      console.log(1);
 
       if (!accessToken || !refreshToken) {
         setTimeout(() => {
@@ -61,6 +60,8 @@ export const Checkout = () => {
         }
 
         const data: IAccount = response.data;
+        console.log(data);
+
         setTimeout(() => {
           setData(data);
           setLoading(true);

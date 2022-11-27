@@ -48,6 +48,20 @@ export const removeGuestByCookie = async (cookie: string) => {
   });
 };
 
+export const getAccountOrdersDB = async (email: string) => {
+  return await prisma.orders.findMany({
+    where: {
+      email,
+    },
+    select: {
+      id: true,
+      order_date: true,
+      order_status: true,
+      total_pirce: true,
+    },
+  });
+};
+
 export const getAccountDetailsDB = async (id: string) => {
   return await prisma.user.findUnique({
     where: {

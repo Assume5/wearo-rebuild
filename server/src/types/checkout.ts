@@ -1,3 +1,5 @@
+import { Role } from "./account";
+
 export type IProductDetails = {
   product_id: string;
   selected_size: string;
@@ -29,4 +31,8 @@ export type ICheckout = {
   billingZip: string;
   total: number;
   productDetails: IProductDetails[];
+  role: Role;
+  apply_coupon: boolean;
+  discount: number;
+  guestId: string;
 };

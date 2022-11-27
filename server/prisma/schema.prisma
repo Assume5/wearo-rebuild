@@ -181,6 +181,8 @@ model orders {
   tracking_number        String?
   order_status           String?
   total_pirce            Float
+  apply_coupon           Boolean?
+  discount               Float?
   order_details          order_details[]
 }
 

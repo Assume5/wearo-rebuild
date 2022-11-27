@@ -22,7 +22,6 @@ export const CheckoutForms = ({ data }: Props) => {
   const navigate = useNavigate();
   const promoCtx = useContext(PromoContext);
   const cartCtx = useContext(CartContext);
-  const userCtx = useContext(UserContext);
   const [shipping, setShipping] = useState<IAddress | null>(null);
   const [billing, setBilling] = useState<IAddress | null>(null);
   const [payment, setPayment] = useState<IPayment | null>(null);
@@ -75,6 +74,16 @@ export const CheckoutForms = ({ data }: Props) => {
 
   const onFinalSubmission = async () => {
     const cart = cartCtx.cart!;
+    let role = '';
+    const guestId = Cookies.get('guest_cookie');
+    if (!guestId) {
+      role = 'customer';
+    } else {
+      role = 'guest';
+    }
+
+    const coupon = promoCtx.promo;
+
     const productDetails = cart.map((item) => ({
       product_id: item.product_id,
       selected_size: item.selected_size,
@@ -105,6 +114,10 @@ export const CheckoutForms = ({ data }: Props) => {
       billingZip: billing?.zip,
       total: total,
       productDetails,
+      role,
+      guestId,
+      apply_coupon: coupon.apply,
+      discount: coupon.discount,
     };
 
     try {
@@ -118,6 +131,7 @@ export const CheckoutForms = ({ data }: Props) => {
 
       const result = await res.json();
       setTimeout(() => {
+        cartCtx.setCart([]);
         navigate(`/order/${result.orderID}`);
       }, timeout);
     } catch (error) {

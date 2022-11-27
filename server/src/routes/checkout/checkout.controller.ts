@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { clearUserCart } from "../../models/cart.model";
 import { createCheckout, promoCheckDB } from "../../models/checkout.model";
 import { ICheckout } from "../../types/checkout";
 
@@ -21,7 +22,6 @@ export const promoCodeCheck: RequestHandler = async (req, res) => {
 
 export const checkout: RequestHandler = async (req, res) => {
   const body: ICheckout = req.body;
-
   try {
     const order = await createCheckout(
       body.email,
@@ -44,9 +44,19 @@ export const checkout: RequestHandler = async (req, res) => {
       body.billingState,
       body.billingZip,
       body.total,
+      body.apply_coupon,
+      body.discount,
       body.productDetails
     );
+
     // Clear cart
+    if (body.role === "customer") {
+      await clearUserCart("customer", body.email);
+    } else {
+      console.log(body);
+      await clearUserCart("guest", body.guestId);
+    }
+
     return res.status(200).json({ orderID: order.id });
   } catch (error) {
     console.log(`Error On Creating Checkout: `, error);

@@ -6,6 +6,7 @@ import {
   deletePaymentDB,
   editCreditCardDB,
   getAccountDetailsDB,
+  getAccountOrdersDB,
   getFavoriteProductDB,
   registerAccountDB,
   registerGuest,
@@ -134,15 +135,12 @@ export const getAccountDetails = async (req: UserAuthInfo, res: Response) => {
   try {
     const { id } = req.user;
     const data = await getAccountDetailsDB(id);
-    const tempPayment = data.payment;
-    tempPayment.forEach((_, i) => {
-      tempPayment[i].card_number = tempPayment[i].card_number.slice(-4);
-    });
-    data.payment = tempPayment;
+    const orders = await getAccountOrdersDB(req.user.email);
+    const result = { ...data, orders };
     return res.status(200).json({
       success: true,
       accessToken: req.accessToken || null,
-      data,
+      data: result,
     });
   } catch (error) {
     console.log("ERROR ON GET ACCOUNT DETAILS: ", error);

@@ -1,0 +1,72 @@
+.order-page {
+  justify-content: center;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+
+    .order-summary {
+      margin-top: 30px;
+    }
+
+    .cart-items-total {
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .order-status {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+
+      .progress {
+        background-color: #22bb33;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 4px;
+        width: 0%;
+        z-index: 1;
+        transition: 1s ease;
+      }
+
+      &::before {
+        content: '';
+        background-color: $grey;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 4px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      .status {
+        z-index: 2;
+        background: $gray;
+        padding: 0 10px;
+
+        p {
+          display: flex;
+          flex-direction: column;
+        }
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+    }
+  }
+}

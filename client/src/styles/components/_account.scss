@@ -109,4 +109,51 @@
       }
     }
   }
+
+  .account-orders {
+    .orders-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px 0;
+
+      .order {
+        display: flex;
+        background-color: $black;
+        justify-content: space-between;
+        padding: 10px 20px;
+        gap: 0 30px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-out;
+
+        &:hover {
+          background-color: $white;
+
+          p {
+            color: $black;
+          }
+        }
+
+        @include breakpoint-max(sm) {
+          gap: 0 15px;
+        }
+
+        p {
+          transition: color 0.3s ease-out;
+          &.order-id {
+            width: 50%;
+
+            @include breakpoint-max(lg) {
+              flex-grow: 1;
+            }
+
+            @include breakpoint-max(sm) {
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
 }

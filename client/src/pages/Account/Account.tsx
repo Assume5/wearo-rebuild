@@ -61,6 +61,8 @@ export const Account = () => {
         if (response.accessToken) {
           Cookies.set('access_token', response.accessToken, { expires: 7, secure: true });
         }
+        console.log(response.data);
+
         setTimeout(() => {
           setData(response.data);
         }, timeout);

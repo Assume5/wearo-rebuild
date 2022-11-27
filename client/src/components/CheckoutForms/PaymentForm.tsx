@@ -88,7 +88,7 @@ export const PaymentForm = ({ payment, setPayment, step, setStep, data }: Props)
 
   const onExistPaymentClick = (payment: IPaymentAccount) => {
     setPayment({
-      card: `XXXXXXXXXXXX${payment.card_number}`,
+      card: `${payment.card_number}`,
       ed: payment.card_exp_date,
       first: payment.card_first_name,
       last: payment.card_last_name,

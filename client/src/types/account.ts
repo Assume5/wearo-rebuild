@@ -15,7 +15,7 @@ export type IPayment = {
 
 export type IOrders = {
   id: string;
-  order_date: Date;
+  order_date: string;
   order_status?: string;
   total_pirce: number;
 };
@@ -33,6 +33,7 @@ export type IAccount = {
   state: string;
   zip: string;
   payment: IPayment[];
+  orders: IOrders[];
 };
 
 export type IFavorites = {

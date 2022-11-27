@@ -1,4 +1,5 @@
 import { prisma } from "../services/db";
+import { Role } from "../types/account";
 
 export const getCartItemsDB = async (role: string, id: string) => {
   const where = {
@@ -211,7 +212,6 @@ export const mergeGuestCartToCustomer = async (
   guestId: string,
   userId: string
 ) => {
-  
   const guestCartItems = await getCartItemsDB("guest", guestId);
 
   for (let i = 0; i < guestCartItems.length; i++) {
@@ -272,5 +272,31 @@ export const mergeGuestCartToCustomer = async (
         },
       });
     }
+  }
+};
+
+export const clearUserCart = async (role: Role, emailOrGuestID: string) => {
+  if (role === "customer") {
+    return await prisma.user.update({
+      where: {
+        email: emailOrGuestID,
+      },
+      data: {
+        cart: {
+          deleteMany: {},
+        },
+      },
+    });
+  } else {
+    return await prisma.guest.update({
+      where: {
+        id: emailOrGuestID,
+      },
+      data: {
+        guest_cart: {
+          deleteMany: {},
+        },
+      },
+    });
   }
 };
