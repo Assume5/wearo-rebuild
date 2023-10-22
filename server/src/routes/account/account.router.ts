@@ -10,6 +10,7 @@ import {
   getAccountDetails,
   getFavoriteProduct,
   login,
+  loginAdmin,
   loginGuest,
   registerAccount,
 } from "./account.controller";
@@ -21,6 +22,8 @@ accountRouter.get("/favorites", authenticateToken, getFavoriteProduct);
 accountRouter.post("/register", registerAccount);
 
 accountRouter.post("/login", login);
+
+accountRouter.post("/login/admin", loginAdmin);
 
 accountRouter.post("/login/guest", loginGuest);
 

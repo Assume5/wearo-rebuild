@@ -8,8 +8,23 @@ export interface CustomJwtPayload extends JwtPayload {
   id: string;
 }
 
+export interface CustomJwtPayloadAdmin extends JwtPayload {
+  id: string;
+  username: string;
+  name: string;
+  role: string;
+  permission: string;
+}
+
 export interface UserAuthInfo extends Request {
   user: CustomJwtPayload;
+  tokenExpired: boolean;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface AdminAuthInfo extends Request {
+  user: CustomJwtPayloadAdmin;
   tokenExpired: boolean;
   accessToken: string;
   refreshToken: string;

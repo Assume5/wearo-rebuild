@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import Cookies from 'js-cookie';
-import { v4 as uuidv4 } from 'uuid';
 import { serverUrl, timeout } from '../utils/constants';
 import { generateGuestCookie } from '../utils/function';
 

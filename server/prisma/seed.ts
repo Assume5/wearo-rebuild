@@ -932,7 +932,7 @@ const admin: Prisma.adminCreateInput = {
   password: "$2b$15$4nGiGHNG/nKXVL2cKClnjezy9YHozpvtTfmYC0000uz8fG5S3jNQa",
   permission: "1",
   role: "Store Owner",
-  username: "wearoadmin",
+  username: "wearo@wearo.com",
 };
 
 async function main() {

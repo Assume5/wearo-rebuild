@@ -5,4 +5,12 @@ export type User = {
   last_name: string;
 };
 
+export type AdminUser = {
+  id: string;
+  username: string;
+  name: string;
+  role: string;
+  permission: string;
+};
+
 export type Role = "customer" | "guest";

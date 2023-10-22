@@ -9,24 +9,15 @@ import { serverUrl } from '../../utils/constants';
 interface Props {
   setAuthState: (state: string) => void;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdmin?: boolean;
 }
 
-export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
+export const LoginForm = ({ setAuthState, setShowModal, isAdmin }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
   const userCtx = useContext(UserContext);
-
-  useEffect(() => {
-    const input = document.querySelector('.password input') as HTMLInputElement;
-    if (!input) return;
-    if (showPassword) {
-      input.type = 'text';
-    } else {
-      input.type = 'password';
-    }
-  }, [showPassword]);
+  const navigate = useNavigate();
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -41,7 +32,7 @@ export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
     const { email, password } = target;
     const guestCookie = Cookies.get('guest_cookie');
 
-    const res = await fetch(`${serverUrl}/account/login`, {
+    const res = await fetch(`${serverUrl}/account/login${isAdmin ? '/admin' : ''}`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -59,9 +50,14 @@ export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
       setErrorMessage(response);
     } else {
       setShowModal(false);
-      Cookies.remove('guest_cookie');
-      Cookies.set('access_token', response.accessToken, { expires: 7, secure: true });
-      Cookies.set('refresh_token', response.refreshToken, { expires: 7, secure: true });
+      if (!isAdmin) Cookies.remove('guest_cookie');
+      const cookieConfig = isAdmin ? { secure: true } : { expires: 7, secure: true };
+      Cookies.set(`access_token${isAdmin ? '_admin' : ''}`, response.accessToken, cookieConfig);
+      Cookies.set(`refresh_token${isAdmin ? '_admin' : ''}`, response.refreshToken, cookieConfig);
+      if (isAdmin) {
+        navigate('/admin/dashboard');
+        return;
+      }
       userCtx.setUser({ isLogin: true, checked: true, firstName: response.name });
     }
 
@@ -78,7 +74,7 @@ export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
         </div>
         <div className="input password">
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" placeholder="Enter Your Password" required />
+          <input type={showPassword ? 'text' : 'password'} name="password" placeholder="Enter Your Password" required />
           <span onClick={() => setShowPassword(!showPassword)}>{showPassword === true ? 'HIDE' : 'SHOW'}</span>
         </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -86,7 +82,7 @@ export const LoginForm = ({ setAuthState, setShowModal }: Props) => {
           Sign In {loading && <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />}
         </button>
       </form>
-      <button onClick={() => setAuthState('signup')}>Sign Up</button>
+      {!isAdmin ? <button onClick={() => setAuthState('signup')}>Sign Up</button> : <></>}
     </>
   );
 };

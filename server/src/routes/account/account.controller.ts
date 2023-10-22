@@ -2,6 +2,7 @@ import { json, Request, RequestHandler, Response } from "express";
 import bcrypt from "bcrypt";
 import {
   checkAccountExists,
+  checkAdminAccountExists,
   checkCreditCardExists,
   deletePaymentDB,
   editCreditCardDB,
@@ -15,7 +16,7 @@ import {
   updatePasswordDB,
   updatePersonalDB,
 } from "../../models/account.model";
-import { User } from "../../types/account";
+import { AdminUser, User } from "../../types/account";
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -86,6 +87,51 @@ export const login = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       name: user.first_name,
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    console.log("ERROR ON LOGIN: ", error);
+    return res.status(500).json("Unable to login, please try again later");
+  }
+};
+
+export const loginAdmin = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json("Missing Fields");
+  }
+
+  try {
+    const account = await checkAdminAccountExists(email);
+
+    if (!account) {
+      return res.status(401).json("Invalid username or password");
+    }
+
+    const accountPassword = account.password;
+    const result = await bcrypt.compare(password, accountPassword);
+
+    if (!result) {
+      return res.status(401).json("Invalid username or password");
+    }
+
+    const user: AdminUser = account;
+
+    const userSign: AdminUser = {
+      username: account.username,
+      name: account.name,
+      role: account.role,
+      permission: account.permission,
+      id: account.id,
+    };
+
+    const accessToken = generateAccessToken(userSign);
+    const refreshToken = generateRefreshToken(userSign);
+
+    return res.status(200).json({
+      name: user.name,
       accessToken,
       refreshToken,
     });

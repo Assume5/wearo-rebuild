@@ -8,9 +8,10 @@ import { SignUpForm } from './SignUpForm';
 interface Props {
   show: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdmin?: boolean;
 }
 
-export const AuthForm = ({ show, setShowModal }: Props) => {
+export const AuthForm = ({ show, setShowModal, isAdmin }: Props) => {
   const [authState, setAuthState] = useState('login');
 
   const changeAuthState = (state: string) => {
@@ -33,9 +34,9 @@ export const AuthForm = ({ show, setShowModal }: Props) => {
   return (
     <Modal rootClassName={`auth-modal ${show && 'show'}`}>
       <>
-        <FontAwesomeIcon icon={faTimes} onClick={onCloseClick} />
+        {!isAdmin ? <FontAwesomeIcon icon={faTimes} onClick={onCloseClick} /> : <></>}
         {authState === 'login' ? (
-          <LoginForm setAuthState={changeAuthState} setShowModal={setShowModal} />
+          <LoginForm setAuthState={changeAuthState} setShowModal={setShowModal} isAdmin={isAdmin} />
         ) : (
           <SignUpForm setAuthState={changeAuthState} />
         )}

@@ -6,6 +6,7 @@ import headerRouter from "./header/header.router";
 import orderRouter from "./order/order.router";
 import pageOptionRouter from "./page-option/page-option.router";
 import productRouter from "./products/products.router";
+import adminRouter from "./admin/admin.router";
 
 const api = Router();
 
@@ -22,5 +23,7 @@ api.use("/cart", cartRouter);
 api.use("/checkout", checkoutRouter);
 
 api.use("/order", orderRouter);
+
+api.use("/admin", adminRouter);
 
 export default api;

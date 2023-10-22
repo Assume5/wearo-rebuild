@@ -39,7 +39,7 @@ export const SortItem: React.FC<Props> = ({ items, rootClass, header, onChange }
         {items.map((item) => {
           {
             return (
-              <div key={item} className="filter-item">
+              <div key={item} className="custom-checkbox filter-item">
                 {rootClass === 'sort-by' ? (
                   <>
                     <label

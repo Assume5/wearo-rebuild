@@ -12,12 +12,16 @@ import { Order } from './Order/Order';
 import { Product } from './Product/Product';
 import { ProductsPage } from './Products/Products';
 import { ProductsOverview } from './ProductsOverview/ProductsOverview';
+import { Admin } from './Admin/Admin';
+import { AdminDashboard } from './Admin/Dashboard';
 
 export const Page = () => {
+  const isAdmin = window.location.pathname.includes('admin');
+
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Header />
+      {isAdmin ? <></> : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:department/" element={<ProductsOverview />} />
@@ -28,8 +32,10 @@ export const Page = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/order/:id" element={<Order />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
-      <Footer />
+      {isAdmin ? <></> : <Footer />}
     </BrowserRouter>
   );
 };

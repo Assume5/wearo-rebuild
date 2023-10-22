@@ -1,5 +1,21 @@
 import { prisma } from "../services/db";
 
+export const checkAdminAccountExists = async (username: string) => {
+  return await prisma.admin.findFirst({
+    where: {
+      username,
+    },
+    select: {
+      name: true,
+      password: true,
+      role: true,
+      permission: true,
+      id: true,
+      username: true,
+    },
+  });
+};
+
 export const checkAccountExists = async (username: string) => {
   return await prisma.user.findUnique({
     where: {
