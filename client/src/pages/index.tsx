@@ -14,6 +14,7 @@ import { ProductsPage } from './Products/Products';
 import { ProductsOverview } from './ProductsOverview/ProductsOverview';
 import { Admin } from './Admin/Admin';
 import { AdminDashboard } from './Admin/Dashboard';
+import { NotFound } from './NotFound/NotFound';
 
 export const Page = () => {
   const isAdmin = window.location.pathname.includes('admin');
@@ -23,6 +24,8 @@ export const Page = () => {
       <ScrollToTop />
       {isAdmin ? <></> : <Header />}
       <Routes>
+        <Route path="*" element={<NotFound />} />
+
         <Route path="/" element={<Home />} />
         <Route path="/products/:department/" element={<ProductsOverview />} />
         <Route path="/products/:department/:category" element={<ProductsPage />} />
